@@ -1,11 +1,9 @@
-/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-/* Header */
 header {
     display: flex;
     height: 70px;
@@ -14,7 +12,7 @@ header {
     align-items: center;
     padding: 10px;
     font-family: sans-serif;
-    text-align: center;  /* Añadido para coincidir con el nuevo estilo */
+    text-align: center;  
 }
 
 .logo {
@@ -25,23 +23,22 @@ header {
 .logo img {
     height: 80px; 
     margin-right: 10px;
-    width: 100px; /* Combinado con el nuevo ancho de imagen */
+    width: 100px; 
 }
 
 nav a {
     color: black;
     text-decoration: none;
     padding: 10px;
-    margin: 0 15px; /* Combinado con el nuevo margen */
+    margin: 0 15px; 
 }
 
 nav a:hover {
     background-color: #d3d3d3;
     border-radius: 5px;
-    color: #007BFF; /* Añadido para cambiar el color al hacer hover */
+    color: #007BFF; 
 }
 
-/* Título central del header */
 .titulo-cita {
     flex-grow: 1;
     text-align: center;
@@ -49,9 +46,8 @@ nav a:hover {
     margin: 0;
 }
 
-/* Main */
 main {
-    padding: 40px; /* Añadido */
+    padding: 40px; 
     display: flex;
     flex-direction: column;  
     align-items: center;     
@@ -61,8 +57,18 @@ main {
     margin: 0;
 }
 
-/* Formulario de registro */
-.formulario-registro {
+footer {
+    background-color: #fef8f9;
+    color: black;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+} 
+
+.formulario-registro { /* Aquí empiezan los estilos de registrarse.html*/
     width: 100%;
     max-width: 500px;
     background-color: #fafafa;
@@ -99,7 +105,7 @@ main {
     margin-bottom: 15px;
 }
 
-.botones {
+.botones { /*Estilo botones registro y login*/
     display: flex;
     justify-content: space-between;
     gap: 5px;
@@ -112,33 +118,15 @@ main {
     cursor: pointer;
 }
 
-.botones button[type="submit"] {
-    background-color: #28a745;
-    color: #fff;
+#botonRegistro2, #botonLimpiar, #botonLimpiar2, #botonLogin2 {
+    background-color: #ff4f81;
+    color: white;
 }
 
-.botones button[type="reset"] {
-    background-color: #dc3545;
-    color: #fff;
-}
+#botonRegistro2:hover, #botonLimpiar:hover, #botonLimpiar2:hover, #botonLogin2:hover {
+    background-color: #e84393;
+} /*Estilo botones registro y login*/
 
-.botones button:hover {
-    opacity: 0.9;
-}
-
-/* Footer */
-footer {
-    background-color: #fef8f9;
-    color: black;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-}
-
-/* Estilos responsivos */
 @media (max-width: 700px) {
     header {
         flex-direction: row;
@@ -163,8 +151,7 @@ footer {
     }
 }
 
-/* Botones generales */
-button {
+button { /*estilo botones index*/
     width: 200px;
     padding: 15px;
     margin: 10px 0;
@@ -194,3 +181,4 @@ button {
 #botonLogin:hover, #botonRegistro:hover {
     background-color: #bcbcbc;
 }
+/*Estilo botones index*/
