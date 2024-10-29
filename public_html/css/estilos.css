@@ -71,8 +71,8 @@ footer {
 .formulario-registro { /* Aquí empiezan los estilos de registrarse.html*/
     width: 100%;
     max-width: 500px;
-    background-color: #fafafa;
-    padding: 20px;
+    background-color: #fafafa
+;   padding: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
