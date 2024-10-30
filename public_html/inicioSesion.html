@@ -23,7 +23,7 @@
 
 <main>
     <h3>¿No tienes cuenta? </h3> 
-    <a href="registrarse.html" id="botonRegistro" onclick="location.href = 'registrarse.html'">Registrarse</a>
+    <a href="#" id="botonRegistro">Registrarse</a> <!-- Solo ID, sin href directo -->
 
     <form id="formulario-inicioSesion">
         <label for="email">Correo Electrónico:</label> 
@@ -33,15 +33,17 @@
         <input type="password" id="password2" name="password" required>
 
         <div class="botones">
-            <button id="botonLogin2" type="submit" >Iniciar Sesión</button>
-            <button id="botonLimpiar2" type="reset" >Limpiar</button>
+            <button id="botonLogin2" type="submit">Iniciar Sesión</button>
+            <button id="botonLimpiar2" type="reset">Limpiar</button>
         </div>
     </form>
 </main>
 
 <footer>
-        <div>© 2024 VitoMaite. Todos los derechos reservados.</div>
+    <div>© 2024 VitoMaite. Todos los derechos reservados.</div>
 </footer>
 
+<!-- Incluye el archivo JavaScript -->
+<script src="js/inicioSesion.js" defer></script>
 </body>
 </html>

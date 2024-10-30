@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar No Registrado - MateVito</title>
+    <link rel="stylesheet" href="css/estilos.css"> <!-- Enlazando el archivo de estilos -->
+</head>
+<body>
+    <header>
+        <h2 class="nombre-app">MateVito</h2>
+        <h1 class="titulo-busqueda">Búsqueda No Registrado</h1>
+    </header>
+
+    <main>
+        <!-- Formulario de Búsqueda -->
+        <div class="busqueda-container">
+            <input type="text" id="nickInput" placeholder="Ingrese el nick" class="input-busqueda">
+            <button id="botonBuscar">Buscar</button>
+        </div>
+
+        <!-- Tabla de Resultados (siempre visible) -->
+        <div id="resultados">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nick</th>
+                        <th>Edad</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaResultados">
+                    <!-- Ejemplo de filas para mostrar la estructura -->
+                    <tr>
+                        <td>usuario1</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>usuario2</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>usuario3</td>
+                        <td>22</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <div>© 2024 MateVito. Todos los derechos reservados.</div>
+    </footer>
+
+    <script src="js/buscarNoRegistrado.js" defer></script> <!-- Agrega tu archivo de JavaScript aquí -->
+</body>
+</html>

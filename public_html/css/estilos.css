@@ -181,4 +181,43 @@ button { /*estilo botones index*/
 #botonLogin:hover, #botonRegistro:hover {
     background-color: #bcbcbc;
 }
+
+/* Estilos para el contenedor de búsqueda */
+.busqueda-container {
+    margin-top: 20px; /* Espacio superior */
+    display: flex; /* Usar flexbox para alinear el input y el botón */
+    justify-content: center; /* Centra el contenido horizontalmente */
+}
+
+/* Estilo del input de búsqueda */
+.input-busqueda {
+    width: 400px; /* Ancho del input */
+    padding: 8px; /* Espaciado interno */
+    font-size: 1rem; /* Tamaño de la fuente */
+    border: 1px solid #ccc; /* Borde del input */
+    border-radius: 4px; /* Bordes redondeados */
+    margin-right: 10px; /* Margen derecho para espacio con el botón */
+}
+
+/* Estilos para la tabla de resultados */
+#resultados {
+    margin-top: 40px; /* Margen superior */
+    width: 50%; /* La tabla ocupa el 50% del ancho de la página */
+    margin: 40px auto 20px; /* Centra el div de resultados */
+}
+
+table {
+    width: 100%; /* La tabla ocupa el ancho completo del contenedor */
+    border-collapse: collapse; /* Sin espacios entre celdas */
+}
+
+th, td {
+    border: 1px solid #333; /* Borde de las celdas */
+    padding: 10px; /* Espaciado interno */
+    font-size: 1rem; /* Tamaño de la fuente */
+}
+
+th {
+    background-color: #f2f2f2; /* Color de fondo de las cabeceras */
+}
 /*Estilo botones index*/
