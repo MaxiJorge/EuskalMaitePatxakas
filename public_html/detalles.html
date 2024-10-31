@@ -1,15 +1,65 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles - VitoMaite</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header>
+        <h2 class="nombre-app">VitoMaite</h2>
+        <div class="perfil">
+            <img src="img/default-profile.jpg" alt="Foto de perfil" class="foto-perfil">
+            <button id="cerrarSesion">Cerrar Sesión</button>
+            <button id="atras">Atrás</button>
+        </div>
+        <h1 class="titulo-busqueda">Detalles</h1>
+    </header>
+
+
+    <main>
+        <section class="detalle-container">
+            <h3>Información del Usuario</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Edad</th>
+                        <th>Género</th>
+                        <th>Ciudad</th>
+                        <th>Intereses</th>
+                        <th>Ocupación</th>
+                        <th>Correo</th>
+                        <th>ColorPelo</th>
+                        <th>ColorOjos</th>
+                        <th>Altura</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="nombre">Jorge</td>
+                        <td id="edad">20</td>
+                        <td id="genero">Hombre</td>
+                        <td id="ciudad">Vitoria</td>
+                        <td id="intereses">Alcohol, Mus</td>
+                        <td id="ocupacion">Ingeniero</td>
+                        <td id="correo">jorge@adsi.com</td>
+                        <td id="colorPelo">Negro</td>
+                        <td id="colorOjos">Marron</td>
+                        <td id="altura">1.50m</td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <div>© 2024 VitoMaite. Todos los derechos reservados.</div>
+    </footer>
+
+    <script src="js/detalles.js" defer></script>
+</body>
 </html>

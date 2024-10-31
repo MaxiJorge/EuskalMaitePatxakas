@@ -1,15 +1,76 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Premium</title>
+    <link rel="stylesheet" href="css/estilos.css"> <!-- Enlazando el archivo de estilos -->
+</head>
+<body>
+    <header>
+        <h2 class="titulo-pagina">Login Premium</h2>
+        <div class="perfil">
+            <img src="img/default-profile.png" alt="Foto de perfil" class="foto-perfil">
+            <button id="cerrarSesion">Cerrar Sesión</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Botones principales -->
+        <div class="botones-principales">
+            <button id="misVisitas">MIS VISITAS</button>
+            <button id="misLikes">MIS LIKES</button>
+            <button id="buscar">BUSCAR</button>
+        </div>
+
+        <!-- Tabla de Visitas -->
+        <section class="tabla-seccion">
+            <h3>Mis Visitas</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>User 1</th>
+                        <th>Ciudad 1</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Ejemplo de fila para mostrar la estructura -->
+                    <tr>
+                        <td>2024-10-31</td>
+                        <td>UsuarioEjemplo</td>
+                        <td>Madrid</td>
+                        <td><button onclick="location.href='detalles.html'">Detalles</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Tabla de Likes -->
+        <section class="tabla-seccion">
+            <h3>Mis Likes</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>User 1</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Ejemplo de fila para mostrar la estructura -->
+                    <tr>
+                        <td>2024-10-31</td>
+                        <td>UsuarioEjemplo2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <div>© 2024 VitoMaite. Todos los derechos reservados.</div>
+    </footer>
+        <script src="js/logueadoPremium.js" defer></script>
+</body>
 </html>

@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const objectStore = transaction.objectStore("Visitas");
         const visitasTableBody = document.querySelector('.tabla-seccion tbody');
         
-        visitasTableBody.innerHTML = ''; // Limpiar tabla antes de cargar
+        // visitasTableBody.innerHTML = ''; // Limpiar tabla antes de cargar
 
         objectStore.openCursor().onsuccess = function(event) {
             const cursor = event.target.result;
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const objectStore = transaction.objectStore("Citas");
         const likesTableBody = document.querySelectorAll('.tabla-seccion')[1].querySelector('tbody');
         
-        likesTableBody.innerHTML = ''; // Limpiar tabla antes de cargar
+        // likesTableBody.innerHTML = ''; // Limpiar tabla antes de cargar
 
         objectStore.openCursor().onsuccess = function(event) {
             const cursor = event.target.result;

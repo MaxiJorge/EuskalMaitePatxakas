@@ -69,4 +69,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Mostrar todos los datos al cargar la página
     renderTabla(usuariosEjemplo);
+    
+    const cerrarSesion = document.getElementById('cerrarSesion');
+        cerrarSesion.addEventListener('click', function() {
+            alert('Sesión cerrada.');
+            window.location.href = 'index.html';
+        });
 });
