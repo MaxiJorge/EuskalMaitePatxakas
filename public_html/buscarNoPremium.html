@@ -1,15 +1,78 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar No Premium - MateVito</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header>
+        <h2 class="nombre-app">MateVito</h2>
+        <div class="perfil">
+            <img src="img/default-profile.jpg" alt="Foto de perfil" class="foto-perfil">
+            <button id="cerrarSesion">Cerrar Sesión</button>
+        </div>
+        <h1 class="titulo-busqueda">Búsqueda No Premium</h1>
+    </header>
+
+    <main>
+        <section class="busqueda-container">
+            <label for="filtroGenero">Género:</label>
+            <select id="filtroGenero">
+                <option value="">Cualquiera</option>
+                <option value="hombre">Hombre</option>
+                <option value="mujer">Mujer</option>
+            </select>
+
+            <label for="filtroEdad">Edad:</label>
+            <select id="filtroEdad">
+                <option value="">Cualquiera</option>
+                <option value="18-25">18-25</option>
+                <option value="26-35">26-35</option>
+                <option value="36-45">36-45</option>
+                <option value="46+">46+</option>
+            </select>
+
+            <label for="filtroCiudad">Ciudad:</label>
+            <select id="filtroCiudad">
+                <option value="">Cualquiera</option>
+                <option value="Vitoria">Vitoria</option>
+                <option value="Bilbo">Bilbo</option>
+                <option value="Donosti">Donosti</option>
+            </select>
+            <button id="buscar" class="boton-buscar">Buscar</button>
+        </section>
+
+        <section id="resultados">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nick</th>
+                        <th>Edad</th>
+                        <th>Ciudad</th>
+                        <th>Detalles</th>
+                        <th>Like</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaResultados">
+                    <!-- Datos de ejemplo -->
+                    <tr>
+                        <td>usuario1</td>
+                        <td>25</td>
+                        <td>Vitoria</td>
+                        <td><button class="detalle-btn">Detalles</button></td>
+                        <td><img src="img/heart.png" class="like-icon" alt="Like"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <div>© 2024 MateVito. Todos los derechos reservados.</div>
+    </footer>
+
+    <script src="js/buscarNoPremium.js" defer></script>
+</body>
 </html>
