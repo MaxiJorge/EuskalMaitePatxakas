@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar No Registrado - MateVito</title>
+    <title>Buscar No Registrado - MaiteVito</title>
     <link rel="stylesheet" href="css/estilos.css"> <!-- Enlazando el archivo de estilos -->
+    <link rel="icon" type="image/ico" href="img/favicon.ico"/>
 </head>
 <body>
     <header>
@@ -22,44 +23,51 @@
     </header>
 
     <main>
-        <!-- Formulario de Búsqueda -->
-        <div class="busqueda-container">
-            <input type="text" id="nickInput" placeholder="Ingrese el nick" class="input-busqueda">
-            <button id="botonBuscar">Buscar</button>
-        </div>
+        <div class="container">
 
-        <!-- Tabla de Resultados (siempre visible) -->
-        <div id="resultados">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nick</th>
-                        <th>Edad</th>
-                    </tr>
-                </thead>
-                <tbody id="tablaResultados">
-                    <!-- Ejemplo de filas para mostrar la estructura -->
-                    <tr>
-                        <td>usuario1</td>
-                        <td>25</td>
-                    </tr>
-                    <tr>
-                        <td>usuario2</td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
-                        <td>usuario3</td>
-                        <td>22</td>
-                    </tr>
-                </tbody>
-            </table>
+            <form id="buscarForm">
+
+                <!-- Campo: ¿Qué estás buscando? -->
+                <label for="genero">¿Qué estás buscando?</label>
+                <select id="genero" name="genero">
+                    <option value="" disabled selected>Selecciona un sexo</option>
+                    <option value="hombre">Hombre</option>
+                    <option value="mujer">Mujer</option>
+                </select>
+
+                <!-- Campo: Edad -->
+                <label for="edadDesde">Entre</label>
+                <select id="edadDesde" name="edadDesde">
+                    <option value="" disabled selected>Edad mínima</option>
+                </select>
+                <label for="edadHasta">y</label>
+                <select id="edadHasta" name="edadHasta">
+                    <option value="" disabled selected>Edad máxima</option>
+                </select>
+
+                <!-- Campo: Ciudad -->
+                <label for="ciudad">¿En qué ciudad vives?</label>
+                <select id="ciudad" name="ciudad">
+                    <option value="" disabled selected>Selecciona una ciudad</option>
+                    <option value="vitoria">Vitoria</option>
+                    <option value="bilbo">Bilbo</option>
+                    <option value="donosti">Donosti</option>
+                </select>
+
+                <!-- Botón de búsqueda -->
+                <button type="button" id="buscarBtn">Ver solteros/as</button>
+            </form>
+
+            <!-- Contenedor para mostrar los usuarios -->
+            <div id="tablaSolteros"></div>
+
         </div>
     </main>
 
     <footer>
         <div>© 2024 VitoMaite. Todos los derechos reservados.</div>
     </footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="js/buscarNoRegistrado.js" defer></script> <!-- Agrega tu archivo de JavaScript aquí -->
 </body>
 </html>
