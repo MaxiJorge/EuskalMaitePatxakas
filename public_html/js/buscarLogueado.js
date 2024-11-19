@@ -30,12 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Añadir eventos a los botones y corazones en cada fila
         document.querySelectorAll('.detalle-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                   const userId = this.getAttribute('data-id'); 
-                   localStorage.setItem('userId', userId); 
-                   window.location.href = 'detalles.html'; 
-                });
+            button.addEventListener('click', function() {
+                window.location.href = 'hacersePremium.html';
             });
+        });
 
         document.querySelectorAll('.like-icon').forEach(icon => {
             icon.addEventListener('click', function() {
@@ -72,10 +70,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Mostrar todos los datos al cargar la página
     renderTabla(usuariosEjemplo);
     
-     // Botón de cerrar sesión
-        const cerrarSesion = document.getElementById('cerrarSesion');
+    const cerrarSesion = document.getElementById('cerrarSesion');
         cerrarSesion.addEventListener('click', function() {
             alert('Sesión cerrada.');
             window.location.href = 'index.html';
         });
+        
+    
 });

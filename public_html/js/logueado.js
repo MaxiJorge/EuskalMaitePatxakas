@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>${visita.fechaUltimaVisita}</td>
                     <td>${visita.visita}</td>
                     <td>${visita.ciudad1 || 'Ciudad desconocida'}</td>
-                    <td><button class="detalle-btn">Detalles</button></td>
+                //Esto está mal puesto
+                    <td> <button class="detalle-btn"> Detalles </button></td>
                 `;
                 visitasTableBody.appendChild(row);
                 cursor.continue();
