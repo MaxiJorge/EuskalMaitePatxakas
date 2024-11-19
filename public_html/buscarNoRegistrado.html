@@ -15,32 +15,33 @@
     <main>
         <!-- Formulario de Búsqueda -->
         <div class="busqueda-container">
-            <select id="generoInput" class="input-busqueda">
-                <option value="hombre">Hombre</option>
-                <option value="mujer">Mujer</option>
-            </select>
-            <input type="number" id="edadMin" placeholder="Edad mínima" class="input-busqueda" min="18" max="100">
-            <input type="number" id="edadMax" placeholder="Edad máxima" class="input-busqueda" min="18" max="100">
-            <select id="ciudadInput" class="input-busqueda">
-                <option value="Vitoria">Vitoria</option>
-                <option value="Bilbao">Bilbao</option>
-                <option value="Donosti">Donosti</option>
-            </select>
+            <input type="text" id="nickInput" placeholder="Ingrese el nick" class="input-busqueda">
             <button id="botonBuscar">Buscar</button>
         </div>
 
-        <!-- Tabla de Resultados (inicialmente oculta) -->
-        <div id="resultados" style="display: none;">
+        <!-- Tabla de Resultados (siempre visible) -->
+        <div id="resultados">
             <table>
                 <thead>
                     <tr>
                         <th>Nick</th>
                         <th>Edad</th>
-                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="tablaResultados">
-                    <!-- Aquí se insertarán los resultados de la búsqueda -->
+                    <!-- Ejemplo de filas para mostrar la estructura -->
+                    <tr>
+                        <td>usuario1</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>usuario2</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>usuario3</td>
+                        <td>22</td>
+                    </tr>
                 </tbody>
             </table>
         </div>

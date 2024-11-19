@@ -10,14 +10,8 @@ function configurarFormulario() {
         event.preventDefault(); // Evita el envío del formulario por defecto
 
         // Captura los valores ingresados por el usuario
-        const email = document.getElementById('email2').value.trim();
-        const password = document.getElementById('password2').value.trim();
-
-        // Verificar que los campos no estén vacíos
-        if (!email || !password) {
-            alert("Por favor ingrese ambos campos: correo y contraseña.");
-            return;
-        }
+        const email = document.getElementById('email2').value;
+        const password = document.getElementById('password2').value;
 
         // Lógica de validación de la sesión
         validarUsuario(email, password);
@@ -49,17 +43,12 @@ function validarUsuario(email, password) {
         request.onsuccess = function() {
             const usuario = request.result;
 
-            if (usuario) {
-                // Comparar la contraseña (recuerda que en un sistema real no deberías hacerlo en texto claro)
-                if (usuario.contraseña === password) {
-                    alert("Inicio de sesión exitoso");
-                    // Redirige a la página de usuario o dashboard
-                    window.location.href = "usuarioDashboard.html"; // Cambia esto por la ruta correcta
-                } else {
-                    alert("Correo o contraseña incorrectos");
-                }
+            if (usuario && usuario.contraseña === password) {
+                alert("Inicio de sesión exitoso");
+                // Redirige a la página de usuario o dashboard
+                window.location.href = "usuarioDashboard.html";
             } else {
-                alert("El correo no está registrado.");
+                alert("Correo o contraseña incorrectos");
             }
         };
 

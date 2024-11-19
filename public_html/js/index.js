@@ -13,19 +13,11 @@ function crearBD() {
 
         // Crea el object store para Usuarios con clave primaria "id" autoincrementable
         const user = db.createObjectStore("Usuarios", { keyPath: "id", autoIncrement: true });
-        
-        // Crear índices para los atributos de Usuarios
+        user.createIndex("correo", "correo", { unique: true });
         user.createIndex("nick", "nick", { unique: false });
-        user.createIndex("género", "género", { unique: false });
-        user.createIndex("correo", "correo", { unique: true }); // correo único
-        user.createIndex("edad", "edad", { unique: false });
         user.createIndex("contraseña", "contraseña", { unique: false });
-        user.createIndex("ciudad", "ciudad", { unique: false });
-        user.createIndex("foto", "foto", { unique: false });
-        user.createIndex("altura", "altura", { unique: false });
-        user.createIndex("colorOjos", "colorOjos", { unique: false });
-        user.createIndex("colorPelo", "colorPelo", { unique: false });
-        user.createIndex("aficiones", "aficiones", { unique: false });
+        user.createIndex("edad", "edad", { unique: false });
+        user.createIndex("esPremium", "esPremium", { unique: false });
 
         // Crea el object store para Citas
         const citas = db.createObjectStore("Citas", { keyPath: "id", autoIncrement: true });
