@@ -108,7 +108,7 @@ function crearBD() {
                 contrasena: "1234",
                 foto: "",
                 edad: "50",
-                genero: "H",
+                genero: "M",
                 esPremium: "1",
                 ciudad: "Bilbo"});
 

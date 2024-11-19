@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login No Premium</title>
     <link rel="stylesheet" href="css/estilos.css"> <!-- Enlazando el archivo de estilos -->
+    <style>
+        /* Ocultar las tablas inicialmente */
+        .tabla-seccion {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -16,6 +22,9 @@
     </header>
 
     <main>
+        <!-- Saludo personalizado -->
+        <div id="saludo"></div>
+
         <!-- Botones principales -->
         <div class="botones-principales">
             <button id="misVisitas">MIS VISITAS</button>
@@ -24,45 +33,34 @@
         </div>
 
         <!-- Tabla de Visitas -->
-        <section class="tabla-seccion">
+        <section class="tabla-seccion" id="tablaVisitasSeccion">
             <h3>Mis Visitas</h3>
             <table>
                 <thead>
                     <tr>
                         <th>Fecha</th>
-                        <th>User 1</th>
-                        <th>Ciudad 1</th>
+                        <th>Usuario</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- Ejemplo de fila para mostrar la estructura -->
-                    <tr>
-                        <td>2024-10-31</td>
-                        <td>UsuarioEjemplo</td>
-                        <td>Madrid</td>
-                        <td><button onclick="location.href='hacersePremium.html'">Detalles</button></td>
-                    </tr>
+                <tbody id="tabla-visitas">
+                    <!-- Las visitas se llenarán desde JavaScript -->
                 </tbody>
             </table>
         </section>
 
         <!-- Tabla de Likes -->
-        <section class="tabla-seccion">
+        <section class="tabla-seccion" id="tablaLikesSeccion">
             <h3>Mis Likes</h3>
             <table>
                 <thead>
                     <tr>
                         <th>Fecha</th>
-                        <th>User 1</th>
+                        <th>Usuario</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- Ejemplo de fila para mostrar la estructura -->
-                    <tr>
-                        <td>2024-10-31</td>
-                        <td>UsuarioEjemplo2</td>
-                    </tr>
+                <tbody id="tabla-likes">
+                    <!-- Los likes se llenarán desde JavaScript -->
                 </tbody>
             </table>
         </section>
@@ -71,6 +69,7 @@
     <footer>
         <div>© 2024 VitoMaite. Todos los derechos reservados.</div>
     </footer>
-            <script src="js/logueado.js" defer></script>
+
+    <script src="js/logueado.js" defer></script>
 </body>
 </html>

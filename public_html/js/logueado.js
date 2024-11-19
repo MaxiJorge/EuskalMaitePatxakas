@@ -1,95 +1,138 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Abre la conexión con IndexedDB
-    const request = indexedDB.open("VitoMaite", 1);
+    const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado'));
 
-    request.onsuccess = function(event) {
-        const db = event.target.result;
-
-        // Cargar datos desde IndexedDB cuando se hace clic en los botones
-        document.getElementById('misVisitas').addEventListener('click', function() {
-            cargarVisitas(db);
-        });
-        
-        document.getElementById('misLikes').addEventListener('click', function() {
-            cargarLikes(db);
-        });
-
-        // Cargar datos al iniciar
-        cargarVisitas(db);
-        cargarLikes(db);
-    };
-
-    request.onerror = function(event) {
-        console.error("Error al abrir la base de datos:", event.target.errorCode);
-    };
-
-    // Función para cargar visitas desde IndexedDB
-    function cargarVisitas(db) {
-        const transaction = db.transaction("Visitas", "readonly");
-        const objectStore = transaction.objectStore("Visitas");
-        const visitasTableBody = document.querySelector('.tabla-seccion tbody');
-        
-        // visitasTableBody.innerHTML = ''; // Limpiar tabla antes de cargar
-
-        objectStore.openCursor().onsuccess = function(event) {
-            const cursor = event.target.result;
-            if (cursor) {
-                const visita = cursor.value;
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${visita.fechaUltimaVisita}</td>
-                    <td>${visita.visita}</td>
-                    <td>${visita.ciudad1 || 'Ciudad desconocida'}</td>
-                //Esto está mal puesto
-                    <td> <button class="detalle-btn"> Detalles </button></td>
-                `;
-                visitasTableBody.appendChild(row);
-                cursor.continue();
-            }
-
-            // Agregar evento para todos los botones "Detalles"
-            document.querySelectorAll('.detalle-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    window.location.href = 'hacersePremium.html';
-                });
-            });
-        };
+    // Verificar si el usuario está logueado
+    if (!usuarioLogueado) {
+        window.location.href = 'inicioSesion.html';
+        return;
     }
 
-    // Función para cargar likes desde IndexedDB
-    function cargarLikes(db) {
-        const transaction = db.transaction("Citas", "readonly");
-        const objectStore = transaction.objectStore("Citas");
-        const likesTableBody = document.querySelectorAll('.tabla-seccion')[1].querySelector('tbody');
-        
-        // likesTableBody.innerHTML = ''; // Limpiar tabla antes de cargar
+    // Mostrar información del usuario en la página
+    document.querySelector('.perfil .foto-perfil').src = usuarioLogueado.foto || 'img/default-profile.png';
 
-        objectStore.openCursor().onsuccess = function(event) {
-            const cursor = event.target.result;
-            if (cursor) {
-                const cita = cursor.value;
-                if (cita.estado === 1) { // Estado 1 indica que es un 'match' o 'like mutuo'
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${cita.fecha}</td>
-                        <td>${cita.user1}</td>
-                    `;
-                    likesTableBody.appendChild(row);
-                }
-                cursor.continue();
-            }
-        };
-    }
+    // Mostrar saludo personalizado
+    const saludoDiv = document.getElementById('saludo');
+    saludoDiv.textContent = `Hola, ${usuarioLogueado.nombre}`;
 
-    // Event listener para el botón "Buscar"
+    // Manejar el cierre de sesión
+    document.getElementById('cerrarSesion').addEventListener('click', function() {
+        cerrarSesion();
+    });
+
+    // Redirigir al buscarLogueado.html
     document.getElementById('buscar').addEventListener('click', function() {
-        window.location.href = 'buscarNoPremium.html';
+        window.location.href = 'buscarLogueado.html';
     });
 
-    // Botón de cerrar sesión
-    const cerrarSesion = document.getElementById('cerrarSesion');
-    cerrarSesion.addEventListener('click', function() {
-        alert('Sesión cerrada.');
-        window.location.href = 'index.html';
+    // Mostrar/ocultar mis visitas
+    document.getElementById('misVisitas').addEventListener('click', function() {
+        toggleVisitas();
     });
+
+    // Mostrar/ocultar mis likes
+    document.getElementById('misLikes').addEventListener('click', function() {
+        toggleLikes();
+    });
+
+    // Función para cerrar sesión
+    function cerrarSesion() {
+        // Eliminar el usuario del localStorage
+        localStorage.removeItem('usuarioLogueado');
+
+        // Redirigir al inicio de sesión
+        window.location.href = 'inicioSesion.html';
+    }
+
+    // Función para mostrar u ocultar las visitas
+    function toggleVisitas() {
+        const tablaVisitasSeccion = document.getElementById('tablaVisitasSeccion');
+        
+        // Si la tabla está visible, la ocultamos, si no está visible, la mostramos
+        if (tablaVisitasSeccion.style.display === 'block') {
+            tablaVisitasSeccion.style.display = 'none';
+        } else {
+            // Mostrar tabla y llenar con datos
+            mostrarMisVisitas();
+            tablaVisitasSeccion.style.display = 'block';
+        }
+    }
+
+    // Función para mostrar u ocultar los likes
+    function toggleLikes() {
+        const tablaLikesSeccion = document.getElementById('tablaLikesSeccion');
+        
+        // Si la tabla está visible, la ocultamos, si no está visible, la mostramos
+        if (tablaLikesSeccion.style.display === 'block') {
+            tablaLikesSeccion.style.display = 'none';
+        } else {
+            // Mostrar tabla y llenar con datos
+            mostrarMisLikes();
+            tablaLikesSeccion.style.display = 'block';
+        }
+    }
+
+    // Función para mostrar las visitas del perfil
+    function mostrarMisVisitas() {
+        const abrir = indexedDB.open("vitomaite02", 1);
+
+        abrir.onsuccess = function(event) {
+            const db = event.target.result;
+            const transaction = db.transaction(["MeGusta"], "readonly");
+            const meGustaStore = transaction.objectStore("MeGusta");
+
+            // Obtener todas las relaciones de "Me Gusta"
+            const request = meGustaStore.getAll();
+
+            request.onsuccess = function(event) {
+                const relaciones = event.target.result;
+                const tablaVisitas = document.getElementById('tabla-visitas');
+                tablaVisitas.innerHTML = ''; // Limpiar tabla
+
+                // Filtrar las visitas relacionadas con el usuario logueado
+                relaciones.forEach(relacion => {
+                    if (relacion.user2 === usuarioLogueado.correo) {
+                        const fila = document.createElement('tr');
+                        fila.innerHTML = `
+                            <td>${relacion.fecha || 'Fecha desconocida'}</td>
+                            <td>${relacion.user1}</td>
+                            <td><button onclick="location.href='detalleVisita.html'">Detalles</button></td>
+                        `;
+                        tablaVisitas.appendChild(fila);
+                    }
+                });
+            };
+        };
+    }
+
+    // Función para mostrar los likes que recibió el usuario
+    function mostrarMisLikes() {
+        const abrir = indexedDB.open("vitomaite02", 1);
+
+        abrir.onsuccess = function(event) {
+            const db = event.target.result;
+            const transaction = db.transaction(["MeGusta"], "readonly");
+            const meGustaStore = transaction.objectStore("MeGusta");
+
+            // Obtener todos los registros de likes
+            const request = meGustaStore.getAll();
+
+            request.onsuccess = function(event) {
+                const likes = event.target.result;
+                const tablaLikes = document.getElementById('tabla-likes');
+                tablaLikes.innerHTML = ''; // Limpiar tabla
+
+                // Filtrar los likes que el usuario ha recibido
+                likes.forEach(like => {
+                    if (like.user2 === usuarioLogueado.correo) {
+                        const fila = document.createElement('tr');
+                        fila.innerHTML = `
+                            <td>${like.fecha || 'Fecha desconocida'}</td>
+                            <td>${like.user1}</td>
+                        `;
+                        tablaLikes.appendChild(fila);
+                    }
+                });
+            };
+        };
+    }
 });
