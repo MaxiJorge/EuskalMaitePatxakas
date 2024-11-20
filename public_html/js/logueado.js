@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Verificar si el usuario está logueado
 
-    document.querySelector('.perfil .foto-perfil').src = usuarioLogueado.foto || 'img/default-profile.png';
+    document.querySelector('.perfil .foto-perfil').src = usuarioLogueado.foto 
 
     // Mostrar saludo personalizado
     const saludoDiv = document.getElementById('saludo');
@@ -23,6 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Redirigir al buscarLogueado.html
     document.getElementById('buscar').addEventListener('click', function() {
         window.location.href = 'buscarLogueado.html';
+    });
+    
+    // Redirigir al buscarLogueado.html
+    document.getElementById('Perfil').addEventListener('click', function() {
+        window.location.href = 'editarPerfil.html';
     });
 
     // Mostrar/ocultar mis visitas
