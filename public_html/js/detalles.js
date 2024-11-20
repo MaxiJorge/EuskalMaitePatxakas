@@ -63,4 +63,13 @@ document.getElementById('btnAtras').addEventListener('click', function(event) {
     window.history.back();   
 });
 
+// Obtener el id del usuario desde la URL
+const usuarioId = obtenerIdDesdeURL();
 
+// Verificar si tenemos un id válido
+if (usuarioId) {
+    // Obtener los detalles del usuario desde IndexedDB
+    obtenerDetallesUsuario(parseInt(usuarioId));
+} else {
+    console.error("No se encontró el id del usuario");
+}

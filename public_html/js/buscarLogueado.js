@@ -215,10 +215,8 @@ function agregarUsuarioALaInterfaz(usuario) {
     
     botonDetalles.addEventListener('click', function () {
         //Guarda el usuario del que vamos a coger los detalle en localStorage
-        localStorage.setItem('usuarioDetalles', JSON.stringify(usuario));
-
-        // Redirige a la pantalla de detalles
-        window.location.href = 'detalles.html';
+        window.location.href = `detalles.html?id=${usuario.id}`;
+        
     });
     // Agregar el botón a la celda
     detallesCelda.appendChild(botonDetalles);
