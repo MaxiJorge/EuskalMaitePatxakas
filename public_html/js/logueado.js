@@ -1,24 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado'));
+    const usuarioLogueado = JSON.parse(sessionStorage.getItem('usuarioLogueado'));
 
     // Verificar si el usuario está logueado
-    if (!usuarioLogueado) {
-        window.location.href = 'inicioSesion.html';
-        return;
-    }
 
-    // Mostrar información del usuario en la página
     document.querySelector('.perfil .foto-perfil').src = usuarioLogueado.foto || 'img/default-profile.png';
 
     // Mostrar saludo personalizado
     const saludoDiv = document.getElementById('saludo');
     saludoDiv.textContent = `Hola, ${usuarioLogueado.nombre}`;
 
+
     // Manejar el cierre de sesión
     document.getElementById('cerrarSesion').addEventListener('click', function() {
         cerrarSesion();
     });
-
+    
+    function cerrarSesion(){
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+    }
+        
     // Redirigir al buscarLogueado.html
     document.getElementById('buscar').addEventListener('click', function() {
         window.location.href = 'buscarLogueado.html';
@@ -33,17 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('misLikes').addEventListener('click', function() {
         toggleLikes();
     });
-
-    // Función para cerrar sesión
-    function cerrarSesion() {
-        // Eliminar el usuario del localStorage
-        localStorage.removeItem('usuarioLogueado');
-
-        // Redirigir al inicio de sesión
-        window.location.href = 'inicioSesion.html';
-    }
-
-    // Función para mostrar u ocultar las visitas
+    
     function toggleVisitas() {
         const tablaVisitasSeccion = document.getElementById('tablaVisitasSeccion');
         
@@ -95,8 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         fila.innerHTML = `
                             <td>${relacion.fecha || 'Fecha desconocida'}</td>
                             <td>${relacion.user1}</td>
-                            <td><button onclick="location.href='detalleVisita.html'">Detalles</button></td>
-                        `;
+                            <td> <button > onclick="location.href='detalleVisita.html'"Detalles</button> </td>`;
                         tablaVisitas.appendChild(fila);
                     }
                 });
