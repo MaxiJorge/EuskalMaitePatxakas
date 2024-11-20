@@ -1,39 +1,66 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Recuperar los datos del usuario desde localStorage
-    var usuarioDetalles = localStorage.getItem('usuarioDetalles');
+// Función para obtener el id del usuario desde la URL
+function obtenerIdDesdeURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('id'); 
+}
 
-    if (!usuarioDetalles) {
-        alert('No se encontraron detalles del usuario.');
-        return;
-    }
-     const btnAtras = document.getElementById('btnAtras');
-    btnAtras.addEventListener('click', function (event) {
-        event.preventDefault(); // Evita el comportamiento por defecto del enlace
-        //Borra el usuario del que estabas viendo 
-        localStorage.clear();
+// Saca los detalles de IndexedDB
+    function obtenerDetallesUsuario(id) {
+    const request = indexedDB.open('vitomaite02', 1); // Abrir la base de datos
 
-        // Redirige a buscarLogueado.html
-        window.location.href = 'buscarLogueado.html';
-    });
+    request.onsuccess = function(event) {
+        var db = event.target.result;
+        var transaction = db.transaction('Usuario', 'readonly');
+        var store = transaction.objectStore('Usuario');
+        var userRequest = store.get(id); // Obtener el usuario por su id
+
+        userRequest.onsuccess = function() {
+            const usuario = userRequest.result;
+
+            if (usuario) {
+ 
+                actualizarDetallesUsuario(usuario);
+            } else {
+                console.error("Usuario no encontrado");
+            }
+        };
+
+        userRequest.onerror = function() {
+            console.error("Error al obtener el usuario desde IndexedDB");
+        };
+    };
+
+    request.onerror = function() {
+        console.error("Error al abrir la base de datos IndexedDB");
+    };
+}
+
+// Función para actualizar los detalles del usuario en el HTML
+function actualizarDetallesUsuario(usuario) {
+    var detallesDiv = document.getElementById('detallesUsuario');
     
-    // Parsear los datos del usuario
-    var usuario = JSON.parse(usuarioDetalles);
+    //Foto por defecto si no tienen ninguna añadida en IndexedDB
+    var fotoUsuario;
+    if (usuario.genero === 'H') {
+        fotoUsuario = 'img/avatar001.png';
+    } else if (usuario.genero === 'M') {
+        fotoUsuario = 'img/avatar002.png'; 
+    } 
 
-    // Seleccionar el contenedor de detalles
-    var detallesUsuario = document.getElementById('detallesUsuario');
+    // Llenar detallesUsuario en HTML
+    detallesDiv.innerHTML = `<div>
+        <img src="${usuario.foto || fotoUsuario}" alt="Foto de ${usuario.nombre}" id="usuarioFoto" />
+                            </div>
+        <h2 id="usuarioNombre">${usuario.nombre}</h2>
+        <p id="usuarioEdad">Edad: ${usuario.edad}</p>
+        <p id="usuarioGenero">Género: ${usuario.genero === 'H' ? 'Masculino' : 'Femenino'}</p>
+        <p id="usuarioCiudad">Ciudad: ${usuario.ciudad}</p>`;
+}
 
-    //Llena el html
-    var contenidoHTML = `<div class="detalle">
-            <img src="${usuario.foto || 'img/default-avatar.png'}" alt="Foto del usuario" class="detalle-foto">
-            <h2>${usuario.nombre}</h2>
-            <p><strong>Edad:</strong> ${usuario.edad}</p>
-            <p><strong>Género:</strong> ${usuario.genero === 'H' ? 'Hombre' : 'Mujer'}</p>
-            <p><strong>Ciudad:</strong> ${usuario.ciudad}</p>
-        </div>`;
 
-    // Insertar el contenido HTML en el contenedor
-    document.getElementById("detallesUsuario").innerHTML = contenidoHTML;
-
-    // Insertar el contenido en el contenedor
-    detallesUsuario.innerHTML = contenidoHTML;
+document.getElementById('btnAtras').addEventListener('click', function(event) {
+    event.preventDefault();  
+    window.history.back();   
 });
+
+
