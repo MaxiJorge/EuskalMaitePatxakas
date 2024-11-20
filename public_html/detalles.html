@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles - VitoMaite</title>
     <link rel="stylesheet" href="css/estilos.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY"></script>
 </head>
 <body>
     <header>
@@ -16,7 +17,6 @@
         </div>
         <h1 class="titulo-busqueda">Detalles</h1>
     </header>
-
 
     <main>
         <section class="detalle-container">
@@ -31,35 +31,110 @@
                         <th>Intereses</th>
                         <th>Ocupación</th>
                         <th>Correo</th>
-                        <th>ColorPelo</th>
-                        <th>ColorOjos</th>
-                        <th>Altura</th>
-
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td id="nombre">Jorge</td>
-                        <td id="edad">20</td>
-                        <td id="genero">Hombre</td>
-                        <td id="ciudad">Vitoria</td>
-                        <td id="intereses">Alcohol, Mus</td>
-                        <td id="ocupacion">Ingeniero</td>
-                        <td id="correo">jorge@adsi.com</td>
-                        <td id="colorPelo">Negro</td>
-                        <td id="colorOjos">Marron</td>
-                        <td id="altura">1.50m</td>
-                        
+                        <td id="nombre"></td>
+                        <td id="edad"></td>
+                        <td id="genero"></td>
+                        <td id="ciudad"></td>
+                        <td id="intereses"></td>
+                        <td id="ocupacion"></td>
+                        <td id="correo"></td>
                     </tr>
                 </tbody>
             </table>
         </section>
+
+        <section id="mapa" style="height: 500px;"></section>
     </main>
 
     <footer>
         <div>© 2024 VitoMaite. Todos los derechos reservados.</div>
     </footer>
 
-    <script src="js/detalles.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const usuarioId = sessionStorage.getItem('usuarioId');
+            if (!usuarioId) {
+                alert("No se encontró información del usuario.");
+                window.location.href = 'buscarLogueado.html';
+                return;
+            }
+
+            const request = indexedDB.open("VitoMaite", 1);
+
+            request.onsuccess = function (event) {
+                const db = event.target.result;
+                cargarUsuario(db, parseInt(usuarioId));
+            };
+
+            function cargarUsuario(db, usuarioId) {
+                const transaction = db.transaction("Usuarios", "readonly");
+                const objectStore = transaction.objectStore("Usuarios");
+
+                const request = objectStore.get(usuarioId);
+                request.onsuccess = function (event) {
+                    const usuario = event.target.result;
+                    if (usuario) {
+                        document.getElementById('nombre').textContent = usuario.nombre;
+                        document.getElementById('edad').textContent = usuario.edad;
+                        document.getElementById('genero').textContent = usuario.genero;
+                        document.getElementById('ciudad').textContent = usuario.ciudad;
+                        document.getElementById('intereses').textContent = usuario.intereses;
+                        document.getElementById('ocupacion').textContent = usuario.ocupacion;
+                        document.getElementById('correo').textContent = usuario.correo;
+
+                        mostrarMapa(usuario);
+                    } else {
+                        alert("No se encontraron detalles para el usuario.");
+                    }
+                };
+            }
+
+            function mostrarMapa(usuario) {
+                const mapa = new google.maps.Map(document.getElementById('mapa'), {
+                    center: { lat: 43.04, lng: -2.67 }, // Centro aproximado del País Vasco
+                    zoom: 8
+                });
+
+                // Coordenadas de las ciudades
+                const ciudades = {
+                    Donosti: { lat: 43.3183, lng: -1.9812 },
+                    Bilbo: { lat: 43.2630, lng: -2.9349 },
+                    Vitoria: { lat: 42.8460, lng: -2.6716 }
+                };
+
+                // Marcadores para las ciudades
+                for (const ciudad in ciudades) {
+                    new google.maps.Marker({
+                        position: ciudades[ciudad],
+                        map: mapa,
+                        title: ciudad
+                    });
+                }
+
+                // Marcador del usuario
+                const usuarioPos = ciudades[usuario.ciudad] || { lat: 43.04, lng: -2.67 };
+                new google.maps.Marker({
+                    position: usuarioPos,
+                    map: mapa,
+                    title: usuario.nombre
+                });
+            }
+
+            // Botón cerrar sesión
+            document.getElementById('cerrarSesion').addEventListener('click', function () {
+                alert('Sesión cerrada.');
+                window.location.href = 'index.html';
+            });
+
+            // Botón atrás
+            document.getElementById('atras').addEventListener('click', function () {
+                window.location.href = 'buscarLogueado.html';
+            });
+        });
+    </script>
 </body>
 </html>

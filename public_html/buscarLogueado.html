@@ -56,11 +56,17 @@
                     </tr>
                 </thead>
                 <tbody id="tablaResultados">
-                    <!-- Datos de ejemplo -->
-                    <tr>
+                    <tr data-usuario-id="1">
                         <td>usuario1</td>
                         <td>25</td>
                         <td>Vitoria</td>
+                        <td><button class="detalle-btn">Detalles</button></td>
+                        <td><img src="img/heart.png" class="like-icon" alt="Like"></td>
+                    </tr>
+                    <tr data-usuario-id="2">
+                        <td>usuario2</td>
+                        <td>30</td>
+                        <td>Bilbo</td>
                         <td><button class="detalle-btn">Detalles</button></td>
                         <td><img src="img/heart.png" class="like-icon" alt="Like"></td>
                     </tr>
@@ -73,6 +79,29 @@
         <div>© 2024 VitoMaite. Todos los derechos reservados.</div>
     </footer>
 
-    <script src="js/buscarLogueado.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tablaResultados = document.getElementById('tablaResultados');
+
+            tablaResultados.addEventListener('click', function (event) {
+                if (event.target.classList.contains('detalle-btn')) {
+                    const fila = event.target.closest('tr');
+                    const usuarioId = fila.dataset.usuarioId;
+
+                    // Guardar usuarioId en localStorage
+                    sessionStorage.setItem('usuarioId', usuarioId);
+
+                    // Redirigir a detalles.html
+                    window.location.href = 'detalles.html';
+                }
+            });
+
+            // Botón de cerrar sesión
+            document.getElementById('cerrarSesion').addEventListener('click', function () {
+                alert('Sesión cerrada.');
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
 </body>
 </html>
