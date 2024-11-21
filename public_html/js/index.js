@@ -103,8 +103,8 @@ function crearBD() {
 
         user.add(
                 {
-                    correo: "jorge2@adsi.com",
-                    nombre: "Jorge",
+                    correo: "pelayo@adsi.com",
+                    nombre: "Pelayo",
                     contrasena: "1234",
                     edad: "29",
                     genero: "H",
