@@ -12,6 +12,7 @@
         <div class="logo">
             <img src="img/VitoMaiteLogo2.png" alt="logo de la app">
             <h2>𝒱𝒾𝓉𝑜𝑀𝒶𝒾𝓉𝑒</h2>
+            <button id="botonCerrarSesion">Cerrar Sesión</button>
         </div>
         <h1 class="titulo-cita">Edita tu perfil</h1>
     </header>
@@ -22,7 +23,7 @@
                 <table class="tabla-formulario">
                     <tr>
                         <td><label for="nombre">Nombre:</label></td>
-                        <td><input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required></td>
+                        <td><input type="text" id="nombre" name="nombre" readonly></td>
                     </tr>
                     <tr>
                         <td><label for="correo">Correo:</label></td>
@@ -30,16 +31,11 @@
                     </tr>
                     <tr>
                         <td><label for="edad">Edad:</label></td>
-                        <td><input type="number" id="edad" name="edad" min="18" max="100" required></td>
+                        <td><input type="number" id="edad" name="edad" readonly></td>
                     </tr>
                     <tr>
-                        <td><label for="genero">Género:</label></td>
-                        <td>
-                            <select id="genero" name="genero" required>
-                                <option value="H">Hombre</option>
-                                <option value="M">Mujer</option>
-                            </select>
-                        </td>
+                        <td><label for="edad">Género:</label></td>
+                        <td><input type="text" id="genero" name="genero" readonly></td>
                     </tr>
                     <tr>
                         <td><label for="ciudad">Ciudad:</label></td>
