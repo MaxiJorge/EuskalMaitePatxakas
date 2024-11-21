@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Botones
 var botonIniciarSesion = document.getElementById('botonIniciarSesion');
 var buscarBtn = document.getElementById("buscarBtn");
+var tablaSolteros = document.getElementById("tablaSolteros");
 
 botonIniciarSesion.addEventListener('click', function () {
 
@@ -75,7 +76,7 @@ function buscarUsuariosPorCriterios() {
     var edadMax = document.getElementById("edadHasta").value;  // Edad máxima
     var ciudadSeleccionada = document.getElementById("ciudad").value; // Ciudad
     
-    var tablaSolteros = document.getElementById("tablaSolteros");
+    
     tablaSolteros.innerHTML = ""; //vaciar la tabla 
     
     // Validar que todos los criterios estén seleccionados
@@ -90,7 +91,7 @@ function buscarUsuariosPorCriterios() {
 
 function obtenerUsuariosPorCriterios(generoSeleccionado, edadMin, edadMax, ciudadSeleccionada) {
     var request = indexedDB.open("vitomaite02", 1); // Abrir la base de datos
-
+    
     request.onerror = function(event) {
         console.error("Error al abrir la base de datos: ", event.target.error);
         alert("Hubo un error al acceder a la base de datos.");
@@ -122,8 +123,8 @@ function obtenerUsuariosPorCriterios(generoSeleccionado, edadMin, edadMax, ciuda
                         var edadUsuario = usuario.edad;
           
                         if (edadUsuario >= edadMin && edadUsuario <= edadMax && 
-                                (generoSeleccionado === "hombre" && usuario.genero === "H") || 
-                                (generoSeleccionado === "mujer" && usuario.genero === "M") && 
+                                ((generoSeleccionado === "hombre" && usuario.genero === "H") || 
+                                (generoSeleccionado === "mujer" && usuario.genero === "M")) && 
                                 usuario.ciudad.toLowerCase() === ciudadSeleccionada.toLowerCase()){
                             
                             agregarUsuarioALaInterfaz(usuario);
@@ -135,10 +136,9 @@ function obtenerUsuariosPorCriterios(generoSeleccionado, edadMin, edadMax, ciuda
                     } else {
                         // Fin del cursor
                         if (encontrados === 0) {
+                            tablaSolteros.innerHTML = "";
                             alert("No se encontraron usuarios que cumplan con los criterios.");
-                        } else {
-                            alert("Se han encontrado " + encontrados + " usuarios que cumplen con los criterios.");
-                        }
+                        } 
                     }
                 };
             }
@@ -147,7 +147,7 @@ function obtenerUsuariosPorCriterios(generoSeleccionado, edadMin, edadMax, ciuda
 }
 
 function agregarUsuarioALaInterfaz(usuario) {
-    var contenedorUsuarios = document.getElementById("tablaSolteros"); // Cambié contenedorUsuarios por tablaSolteros
+    var contenedorUsuarios = document.getElementById("tablaSolteros"); 
 
     // Verificar si ya existe la tabla
     var tablaUsuarios = document.querySelector(".tabla-usuarios");
