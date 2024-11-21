@@ -54,7 +54,11 @@
                     </tr>
                     <tr>
                         <td><label for="foto">Foto de perfil:</label></td>
-                        <td><input type="file" id="foto" name="foto" accept="image/*"></td>
+                        <td>
+                            <input type="file" id="foto" name="foto" accept="image/*">
+                            <div id="dropZone">Arrastra una imagen aquí</div>
+                            <img id="previewImage" src="" alt="Vista previa de la foto de perfil">
+                        </td>
                     </tr>
                 </table>
                     <button id="guardarPerfilBtn">Guardar Cambios</button>     
