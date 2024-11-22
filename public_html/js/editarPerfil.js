@@ -2,16 +2,52 @@ document.addEventListener('DOMContentLoaded', function() {
     var usuarioLogueado = JSON.parse(sessionStorage.getItem('usuarioLogueado'));
     
     // Rellenar los campos del formulario con la información actual del usuario
-    document.getElementById('nombre').value = usuarioLogueado.nombre;
+    document.getElementById('nombre').value = usuarioLogueado.nombre; // Solo mostrar, no editable
     document.getElementById('correo').value = usuarioLogueado.correo; // Solo mostrar, no editable
-    document.getElementById('edad').value = usuarioLogueado.edad;
-    document.getElementById('genero').value = usuarioLogueado.genero;
+    document.getElementById('edad').value = usuarioLogueado.edad;     // Solo mostrar, no editable
+    document.getElementById('genero').value = usuarioLogueado.genero; // Solo mostrar, no editable
     document.getElementById('ciudad').value = usuarioLogueado.ciudad;
     
-    
         //******BOTONES********    
-    var botonCerrarSesion = document.getElementById("botonCerrarSesion");
-    var botonGuardarPerfil = document.getElementById("guardarPerfilBtn");
+    botonCerrarSesion = document.getElementById("botonCerrarSesion");
+    botonGuardarPerfil = document.getElementById("guardarPerfilBtn");
+    botonAtras = document.getElementById("btnAtras");
+    dropZone = document.getElementById("dropZone");
+    previewImage = document.getElementById('previewImage');
+    
+    
+    
+    // Evento para resaltar cuando se arrastra algo sobre el área
+    dropZone.addEventListener('dragover', (event) => {
+        event.preventDefault(); // Evitar el comportamiento predeterminado
+        dropZone.classList.add('hover'); // Agrega una clase de estilo para resaltar
+    });
+    
+    // Evento para quitar el resaltado cuando se deja de arrastrar
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('hover');
+    });
+    
+    
+    
+    dropZone.addEventListener('drop', (event) => {
+    event.preventDefault();
+    dropZone.classList.remove('hover');
+
+    // Obtener el archivo arrastrado
+    const file = event.dataTransfer.files[0];
+        if (file) {
+            convertirArchivoABase64(file, (base64) => {
+                if (base64) {
+                    previewImage.src = base64; // Actualiza la imagen de vista previa
+                    usuarioLogueado.foto = base64; // Almacena en el objeto del usuario
+                } else {
+                    alert("Error al procesar la imagen. Inténtalo nuevamente.");
+                }
+            });
+        }
+    });
+
 
     botonCerrarSesion.addEventListener('click', function() {
         cerrarSesion();
@@ -22,23 +58,40 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'index.html';
     }
     
+    function atrasPagina(){
+        event.preventDefault();  
+        window.history.back();   
+    }
+    
+    botonAtras.addEventListener('click', function() {
+        atrasPagina();
+    });
+    
+    //******* CONVERTIR A BASE 64 **************************
+    function convertirArchivoABase64(file, callback) {
+        reader = new FileReader();
+
+        reader.onload = function (event) {
+            callback(event.target.result);  // Llama al callback con el resultado base64
+        };
+
+        reader.onerror = function (error) {
+            console.error("Error al leer el archivo:", error);
+            callback(null);
+        };   
+    
+        reader.readAsDataURL(file);  // Convierte el archivo a base64
+    }
+    
     botonGuardarPerfil.addEventListener('click', function (event) {
         event.preventDefault(); // Evitar recargar la página
 
         // Recopilar los datos del formulario
-        var nombre = document.getElementById('nombre').value;
-        var edad = document.getElementById('edad').value;
-        var genero = document.getElementById('genero').value;
-        var ciudad = document.getElementById('ciudad').value;
+        ciudad = document.getElementById('ciudad').value;
 
         // Validaciones
-        if (!nombre || !edad || !ciudad || !genero) {
+        if (!ciudad) {
             alert("Por favor, completa todos los campos obligatorios.");
-            return;
-        }
-
-        if (edad < 18 || edad > 99) {
-            alert("La edad debe estar entre 18 y 99 años.");
             return;
         }
 
@@ -65,17 +118,14 @@ document.addEventListener('DOMContentLoaded', function() {
             var solicitudUsuario = usuariosStore.index("correo").get(usuarioLogueado.correo);
             
             solicitudUsuario.onsuccess = function () {
-                var usuario = solicitudUsuario.result;
+                usuario = solicitudUsuario.result;
 
                 if (usuario) {
                     // Actualizar los datos
-                    usuario.nombre = nombre;
-                    usuario.edad = edad;
                     usuario.ciudad = ciudad;
-                    usuario.genero = genero;
 
-                    // Actualizar la foto si se seleccionó una nueva
-                    var foto = document.getElementById('foto').files;
+                    // Actualizar la foto (file) si se seleccionó una nueva
+                    foto = document.getElementById('foto').files;
                     if (foto.length > 0) {
                         convertirArchivoABase64(foto[0], function (base64) {
                             if (base64) {
@@ -88,13 +138,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else {
                         guardarUsuario(usuario, usuariosStore);
                     }
+                    // Actualizar la foto (drop zone) si se seleccionó una nueva
+
+          
                 }
             };
-        };
-        
+        };       
                 // Función para guardar el usuario actualizado
         function guardarUsuario(usuario, store) {
-            var solicitudActualizacion = store.put(usuario);
+            solicitudActualizacion = store.put(usuario);
 
             solicitudActualizacion.onsuccess = function () {
                 alert("Perfil actualizado correctamente.");
@@ -112,3 +164,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     });
     });
+    
