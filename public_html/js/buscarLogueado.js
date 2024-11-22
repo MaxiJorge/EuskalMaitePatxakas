@@ -22,6 +22,37 @@ buscarBtn.addEventListener("click", function () {
 
 });
 
+//Funcion para dar Like
+function darLike(emailEmisor, emailReceptor, nombreReceptor) {
+    const request = indexedDB.open("vitomaite02", 1);
+
+    request.onsuccess = function (evento) {
+        const db = evento.target.result;
+        const transaccion = db.transaction(["MeGusta"], "readwrite");
+        const meGustaStore = transaccion.objectStore("MeGusta");
+   
+        // Crear el registro del "like"
+        const like = {
+            user1: emailEmisor,
+            user2: emailReceptor,
+            estado: "1" // Estado por defecto (puedes usarlo para otros propósitos en el futuro)
+        };
+
+        const solicitudAgregar = meGustaStore.add(like);
+
+        solicitudAgregar.onsuccess = function () {
+            alert(`Has dado like al usuario ${nombreReceptor}`);
+        };
+
+        solicitudAgregar.onerror = function () {
+            alert("Hubo un error al registrar el like. Es posible que ya hayas dado like a este usuario.");
+        };
+    };
+
+    request.onerror = function () {
+        alert("Error al acceder a la base de datos.");
+    };
+}
 
 // Función para generar las opciones en un rango específico
 function generarOpcionesEdad(selectId, minEdad, maxEdad) {
@@ -177,14 +208,15 @@ function agregarUsuarioALaInterfaz(usuario) {
 
         var detallesCabecera = document.createElement("th");
         detallesCabecera.textContent = "Mas información";
-
-
-
+        
+        var likeCabecera = document.createElement("th");
+        likeCabecera.textContent = "Me Gusta";
         // Agregar celdas de la cabecera
         filaCabecera.appendChild(fotoCabecera);
         filaCabecera.appendChild(nombreCabecera);
         filaCabecera.appendChild(edadCabecera);
         filaCabecera.appendChild(detallesCabecera);
+        filaCabecera.appendChild(likeCabecera);
         // Agregar la fila de la cabecera a la tabla
         tablaUsuarios.appendChild(filaCabecera);
 
@@ -218,14 +250,33 @@ function agregarUsuarioALaInterfaz(usuario) {
         window.location.href = `detalles.html?id=${usuario.id}`;
         
     });
-    // Agregar el botón a la celda
+     // Agregar el botón a la celda
     detallesCelda.appendChild(botonDetalles);
+    
+    const likeCelda = document.createElement("td");
+    const imagenLike = document.createElement("img");
+    imagenLike.src = "img/like.png";
+    imagenLike.alt = "Dar like";
+    imagenLike.style.width = "30px";
+    imagenLike.style.cursor = "pointer";
+
+    imagenLike.addEventListener("click", function () {
+        var usuarioLogueado = JSON.parse(sessionStorage.getItem("usuarioLogueado"));
+        if (usuarioLogueado) {
+            darLike(usuarioLogueado.correo, usuario.correo, usuario.nombre);
+        } else {
+            alert("Debes estar logueado para dar like.");
+        }
+    });
+
+    likeCelda.appendChild(imagenLike);
+      
     // Agregar celdas a la fila del usuario
     filaUsuario.appendChild(fotoCelda);
     filaUsuario.appendChild(nombreCelda);
     filaUsuario.appendChild(edadCelda);
     filaUsuario.appendChild(detallesCelda);
-
+    filaUsuario.appendChild(likeCelda);
     // Agregar la fila del usuario a la tabla
     tablaUsuarios.appendChild(filaUsuario);
 }
