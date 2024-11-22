@@ -235,7 +235,7 @@ function crearBD() {
 
 
 
-        // Crea el object store para Visitas
+        // Crea el object store para Aficiones
         var aficionesStore = db.createObjectStore("Afición", {keyPath: "id", autoIncrement: true});
         aficionesStore.add({nombre: "Fortnite"});
         aficionesStore.add({nombre: "Glow"});

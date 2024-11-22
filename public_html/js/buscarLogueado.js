@@ -27,7 +27,7 @@ buscarBtn.addEventListener("click", function () {
 function generarOpcionesEdad(selectId, minEdad, maxEdad) {
     var select = document.getElementById(selectId);
 
-    // Limpia ociones por si se vuelve a seleccionar edadMin
+    // Limpia opciones por si se vuelve a seleccionar edadMin
     select.innerHTML = "";
 
     //Nada mas entras que no te salga seleccionado el 18
