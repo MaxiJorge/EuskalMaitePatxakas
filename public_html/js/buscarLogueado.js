@@ -300,7 +300,7 @@ function agregarUsuarioALaInterfaz(usuario) {
             alert("Debes estar logueado para dar like.");
         }
     });
-
+ 
     likeCelda.appendChild(imagenLike);
       
     // Agregar celdas a la fila del usuario
