@@ -64,12 +64,10 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     }
 
-    // Función para agregar una afición a las seleccionadas
     function agregarAficion(aficionId, aficionNombre) {
         const aficionesSeleccionadasList = document.getElementById("seleccionadas-list");
         const aficionesNoSeleccionadasList = document.getElementById("no-seleccionadas-list");
 
-        // Mover la afición
         const li = document.createElement("li");
         li.textContent = aficionNombre;
         li.onclick = function () {
@@ -77,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         aficionesSeleccionadasList.appendChild(li);
 
-        // Eliminar de la lista no seleccionada
         const items = aficionesNoSeleccionadasList.getElementsByTagName("li");
         for (let item of items) {
             if (item.textContent === aficionNombre) {
@@ -85,23 +82,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
             }
         }
-
-        // Aquí deberías agregar la afición seleccionada en la base de datos
-        const dbRequest = indexedDB.open("vitomaite02", 1);
-        dbRequest.onsuccess = function (event) {
-            const db = event.target.result;
-            const transaction = db.transaction(["Usuario_Aficion"], "readwrite");
-            const store = transaction.objectStore("Usuario_Aficion");
-            store.add({ email: usuarioLogueado.correo, aficion: aficionId });
-        };
     }
 
-    // Función para eliminar una afición de las seleccionadas
     function eliminarAficion(aficionId, aficionNombre) {
         const aficionesSeleccionadasList = document.getElementById("seleccionadas-list");
         const aficionesNoSeleccionadasList = document.getElementById("no-seleccionadas-list");
 
-        // Mover la afición
         const li = document.createElement("li");
         li.textContent = aficionNombre;
         li.onclick = function () {
@@ -109,7 +95,6 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         aficionesNoSeleccionadasList.appendChild(li);
 
-        // Eliminar de la lista seleccionada
         const items = aficionesSeleccionadasList.getElementsByTagName("li");
         for (let item of items) {
             if (item.textContent === aficionNombre) {
@@ -117,39 +102,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
             }
         }
-
-        // Aquí deberías eliminar la afición de la base de datos
-        const dbRequest = indexedDB.open("vitomaite02", 1);
-        dbRequest.onsuccess = function (event) {
-            const db = event.target.result;
-            const transaction = db.transaction(["Usuario_Aficion"], "readwrite");
-            const store = transaction.objectStore("Usuario_Aficion");
-            const index = store.index("email");
-            const request = index.openCursor(IDBKeyRange.only(usuarioLogueado.correo));
-
-            request.onsuccess = function (event) {
-                const cursor = event.target.result;
-                if (cursor) {
-                    if (cursor.value.aficion === aficionId) {
-                        store.delete(cursor.primaryKey);
-                    }
-                    cursor.continue();
-                }
-            };
-        };
     }
 
     // Guardar cambios y redirigir
     document.getElementById("guardar-cambios").addEventListener("click", function () {
-        // Guardamos los cambios realizados
         const aficionesSeleccionadasList = document.getElementById("seleccionadas-list");
         const aficionesSeleccionadas = [];
-        
+
         for (let li of aficionesSeleccionadasList.getElementsByTagName("li")) {
             aficionesSeleccionadas.push(li.textContent);
         }
 
-        // Actualizar las aficiones del usuario en la base de datos
         const dbRequest = indexedDB.open("vitomaite02", 1);
         dbRequest.onsuccess = function (event) {
             const db = event.target.result;
@@ -167,19 +130,29 @@ document.addEventListener('DOMContentLoaded', function () {
                     cursor.continue();
                 } else {
                     // Luego, agregamos las nuevas aficiones seleccionadas
-                    aficionesSeleccionadas.forEach(aficion => {
-                        // Buscar ID de cada afición
-                        const aficionStore = db.transaction("Afición", "readonly").objectStore("Afición");
-                        const requestAficion = aficionStore.index("nombre").get(aficion);
-                        requestAficion.onsuccess = function() {
-                            store.add({ email: usuarioLogueado.correo, aficion: requestAficion.result.id });
-                        };
-                    });
-
-                    // Redirigir al usuario a logueado.html después de guardar
-                    window.location.href = 'logueado.html';
+                    agregarNuevasAficiones(db, aficionesSeleccionadas);
                 }
             };
         };
     });
+
+    function agregarNuevasAficiones(db, aficionesSeleccionadas) {
+        const transaction = db.transaction(["Afición", "Usuario_Aficion"], "readwrite");
+        const aficionStore = transaction.objectStore("Afición");
+        const usuarioAficionStore = transaction.objectStore("Usuario_Aficion");
+
+        aficionesSeleccionadas.forEach(aficion => {
+            const requestAficion = aficionStore.index("nombre").get(aficion);
+            requestAficion.onsuccess = function () {
+                if (requestAficion.result) {
+                    usuarioAficionStore.add({ email: usuarioLogueado.correo, aficion: requestAficion.result.id });
+                }
+            };
+        });
+
+        // Redirigir al usuario a logueado.html después de guardar
+        transaction.oncomplete = function () {
+            window.location.href = 'logueado.html';
+        };
+    }
 });

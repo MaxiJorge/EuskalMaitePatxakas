@@ -19,40 +19,28 @@ document.addEventListener('DOMContentLoaded', function() {
         sessionStorage.clear();
         window.location.href = 'index.html';
     }
-        
-    // Redirigir al buscarLogueado.html
-    document.getElementById('buscar').addEventListener('click', function() {
-        window.location.href = 'buscarLogueado.html';
-    });
     
     // Redirigir al buscarLogueado.html
     document.getElementById('Perfil').addEventListener('click', function() {
         window.location.href = 'editarPerfil.html';
     });
-
-    // Mostrar/ocultar mis visitas
-    document.getElementById('misVisitas').addEventListener('click', function() {
-        toggleVisitas();
+    
+     // Redirigir al verAficiones.html
+    document.getElementById('verAficiones').addEventListener('click', function() {
+        window.location.href = 'verAficiones.html';
     });
-
+    
+     // Redirigir al buscarLogueado.html
+    document.getElementById('editarAficiones').addEventListener('click', function() {
+        window.location.href = 'editarAficiones.html';
+    });
+    
     // Mostrar/ocultar mis likes
     document.getElementById('misLikes').addEventListener('click', function() {
         toggleLikes();
     });
     
-    function toggleVisitas() {
-        const tablaVisitasSeccion = document.getElementById('tablaVisitasSeccion');
-        
-        // Si la tabla está visible, la ocultamos, si no está visible, la mostramos
-        if (tablaVisitasSeccion.style.display === 'block') {
-            tablaVisitasSeccion.style.display = 'none';
-        } else {
-            // Mostrar tabla y llenar con datos
-            mostrarMisVisitas();
-            tablaVisitasSeccion.style.display = 'block';
-        }
-    }
-
+    
     // Función para mostrar u ocultar los likes
     function toggleLikes() {
         const tablaLikesSeccion = document.getElementById('tablaLikesSeccion');

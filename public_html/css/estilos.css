@@ -241,3 +241,20 @@ img {
     font-size: 1.5rem;
     color: #333;
 }
+
+/* Estilo específico para los botones de Ver y Editar Aficiones */
+.verAficionesBtn, .editarAficionesBtn {
+    display: inline-block;  /* Asegúrate de que estén visibles */
+    padding: 10px 20px;
+    background-color: #ff4f81;  /* Color de fondo */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px;  /* Espaciado alrededor del botón */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.verAficionesBtn:hover, .editarAficionesBtn:hover {
+    background-color: #e84393;  /* Color al pasar el ratón */
+}

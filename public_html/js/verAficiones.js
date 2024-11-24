@@ -12,6 +12,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
+function atrasPagina() {
+    event.preventDefault();
+    window.history.back();
+}
+
+document.getElementById("botonAtras").addEventListener('click', function () {
+    atrasPagina();
+});
+
 // Función para obtener las aficiones del usuario logueado
 function obtenerAficiones(correoUsuario) {
     var abrir = indexedDB.open("vitomaite02", 1);
