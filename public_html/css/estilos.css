@@ -1,3 +1,4 @@
+
 body {
     
    
@@ -258,3 +259,62 @@ img {
 .verAficionesBtn:hover, .editarAficionesBtn:hover {
     background-color: #e84393;  /* Color al pasar el ratón */
 }
+
+/* Botón de me gusta más pequeño y centrado */
+.like-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+  background: white; /* Fondo blanco */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  color: red; /* Corazón rojo */
+  font-family: "Arial", sans-serif;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  width: 50px; /* Tamaño reducido */
+  height: 50px; /* Tamaño reducido */
+  position: relative;
+  overflow: hidden;
+  margin: auto; /* Centrar en la celda */
+}
+
+.like-button:before {
+  content: "\2764"; /* Icono del corazón */
+  font-size: 24px; /* Tamaño ajustado */
+  color: red; /* Corazón rojo */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.like-button:hover {
+  animation: heartBeat 0.6s infinite;
+}
+
+.like-button:hover:before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+@keyframes heartBeat {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Para centrar la celda en la tabla */
+td {
+  text-align: center; /* Centrar horizontalmente */
+  vertical-align: middle; /* Centrar verticalmente */
+}
+
