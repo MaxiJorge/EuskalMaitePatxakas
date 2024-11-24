@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var usuarioLogueado = JSON.parse(sessionStorage.getItem('usuarioLogueado'));
     
     // Rellenar los campos del formulario con la información actual del usuario
-    document.getElementById('nombre').value = usuarioLogueado.nombre; // Solo mostrar, no editable
     document.getElementById('correo').value = usuarioLogueado.correo; // Solo mostrar, no editable
     document.getElementById('edad').value = usuarioLogueado.edad;     // Solo mostrar, no editable
     document.getElementById('genero').value = usuarioLogueado.genero; // Solo mostrar, no editable
@@ -14,7 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
     botonAtras = document.getElementById("btnAtras");
     dropZone = document.getElementById("dropZone");
     previewImage = document.getElementById('previewImage');
+    fotoInput = document.getElementById('foto');
+    fotoPerfil = document.getElementById('fotoPerfil');
+    nombrePerfil = document.getElementById('nombrePerfil');
     
+
+    // Si el usuario tiene una foto, se muestra; de lo contrario, se coloca una imagen por defecto
+    fotoPerfil.src = usuarioLogueado.foto || 'img/default-avatar.png';
+    nombrePerfil.textContent = usuarioLogueado.nombre;
     
     
     // Evento para resaltar cuando se arrastra algo sobre el área
@@ -47,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-
-
+    
+    
     botonCerrarSesion.addEventListener('click', function() {
         cerrarSesion();
     });
@@ -82,6 +88,21 @@ document.addEventListener('DOMContentLoaded', function() {
     
         reader.readAsDataURL(file);  // Convierte el archivo a base64
     }
+    
+    // Evento para manejar la selección de archivo
+    fotoInput.addEventListener('change', function () {
+        const file = fotoInput.files[0]; // Obtén el archivo seleccionado
+        if (file) {
+            convertirArchivoABase64(file, function (base64) {
+                if (base64) {
+                    previewImage.src = base64; // Actualiza la vista previa
+                    usuarioLogueado.foto = base64; // Almacena la foto en el usuario
+                } else {
+                    alert("Error al procesar la imagen. Inténtalo nuevamente.");
+                }
+            });
+        }
+    });
     
     botonGuardarPerfil.addEventListener('click', function (event) {
         event.preventDefault(); // Evitar recargar la página
@@ -130,7 +151,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         convertirArchivoABase64(foto[0], function (base64) {
                             if (base64) {
                                 usuario.foto = base64;
-                                guardarUsuario(usuario, usuariosStore);
+                                previewImage.src = base64;
+
+                                var nuevaTransaccion = db.transaction(["Usuario"], "readwrite");
+                                var nuevaStore = nuevaTransaccion.objectStore("Usuario");
+                                guardarUsuario(usuario, nuevaStore);
                             } else {
                                 alert("Error al cargar la foto. Inténtalo nuevamente.");
                             }
@@ -138,9 +163,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else {
                         guardarUsuario(usuario, usuariosStore);
                     }
-                    // Actualizar la foto (drop zone) si se seleccionó una nueva
-
-          
                 }
             };
         };       
