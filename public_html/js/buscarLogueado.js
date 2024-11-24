@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
 var botonCerrarSesion = document.getElementById('botonCerrarSesion');
 var buscarBtn = document.getElementById("buscarBtn");
 
+//Usuario en SessionStorage
+var usuarioLogueado = JSON.parse(sessionStorage.getItem("usuarioLogueado"));
+
 botonCerrarSesion.addEventListener('click', function () {
 
     cerrarSesion();
@@ -21,6 +24,84 @@ buscarBtn.addEventListener("click", function () {
     buscarUsuariosPorCriterios();
 
 });
+
+// Función para dar Like
+function darLike(emailEmisor, emailReceptor, nombreReceptor) {
+    const request = indexedDB.open("vitomaite02", 1);
+
+    request.onsuccess = function (evento) {
+        const db = evento.target.result;
+        const transaccion = db.transaction(["MeGusta"], "readwrite");
+        const meGustaStore = transaccion.objectStore("MeGusta");
+
+        // Comprobar si ya hay un registro entre los dos usuarios con estado "2" (MATCH)
+        var indexUser1 = meGustaStore.index("user1");
+        var cursorRequest = indexUser1.openCursor(IDBKeyRange.only(emailEmisor));
+
+        cursorRequest.onsuccess = function (event) {
+            var cursor = event.target.result;
+
+            if (cursor) {
+                var registro = cursor.value;
+
+                // Comprobar si existe un MATCH entre los usuarios
+                if (registro.user2 === emailReceptor && registro.estado === "2") {
+                    alert(`¡Ya tienes un MATCH con ${nombreReceptor}!`);
+                    return; // Salir sin hacer nada más
+                }
+
+                cursor.continue();
+            } else {
+                // Si no hay MATCH previo, seguimos con el flujo normal
+                verificarLikePrevio(emailEmisor, emailReceptor, nombreReceptor, meGustaStore);
+            }
+        };
+    };
+}
+
+function verificarLikePrevio(emailEmisor, emailReceptor, nombreReceptor, meGustaStore) {
+    // Comprobar si ya existe un like dado por el emisor al receptor
+    var indexUser1 = meGustaStore.index("user1");
+    var cursorRequest = indexUser1.openCursor(IDBKeyRange.only(emailEmisor));
+
+    cursorRequest.onsuccess = function (event) {
+        var cursor = event.target.result;
+
+        if (cursor) {
+            var registro = cursor.value;
+
+            if (registro.user2 === emailReceptor) {
+                alert(`Ya has dado like a ${nombreReceptor}.`);
+                return; // Salir sin hacer nada más
+            }
+
+            cursor.continue();
+        } else {
+            // Si no hay registro previo, damos un nuevo like
+            agregarNuevoLike(emailEmisor, emailReceptor, nombreReceptor, meGustaStore);
+        }
+    };
+}
+
+function agregarNuevoLike(emailEmisor, emailReceptor, nombreReceptor, meGustaStore) {
+    // Crear un nuevo registro de like
+    var nuevoLike = {
+        user1: emailEmisor,
+        user2: emailReceptor,
+        estado: "1" // Estado inicial
+    };
+
+    var addRequest = meGustaStore.add(nuevoLike);
+
+    addRequest.onsuccess = function () {
+        alert(`Has dado like a ${nombreReceptor}.`);
+    };
+
+    addRequest.onerror = function (error) {
+        console.error("Error al guardar el like: ", error);
+    };
+}
+
 
 
 // Función para generar las opciones en un rango específico
@@ -126,7 +207,8 @@ function obtenerUsuariosPorCriterios(generoSeleccionado, edadMin, edadMax, ciuda
                         // Verificar los criterios de búsqueda
                         var edadUsuario = usuario.edad;
 
-                        if (edadUsuario >= edadMin && edadUsuario <= edadMax &&
+                        if ( usuario.correo !== usuarioLogueado.correo && 
+                                edadUsuario >= edadMin && edadUsuario <= edadMax &&
                                 ((generoSeleccionado === "hombre" && usuario.genero === "H") ||
                                         (generoSeleccionado === "mujer" && usuario.genero === "M")) &&
                                 usuario.ciudad.toLowerCase() === ciudadSeleccionada.toLowerCase()) {
@@ -177,14 +259,15 @@ function agregarUsuarioALaInterfaz(usuario) {
 
         var detallesCabecera = document.createElement("th");
         detallesCabecera.textContent = "Mas información";
-
-
-
+        
+        var likeCabecera = document.createElement("th");
+        likeCabecera.textContent = "Me Gusta";
         // Agregar celdas de la cabecera
         filaCabecera.appendChild(fotoCabecera);
         filaCabecera.appendChild(nombreCabecera);
         filaCabecera.appendChild(edadCabecera);
         filaCabecera.appendChild(detallesCabecera);
+        filaCabecera.appendChild(likeCabecera);
         // Agregar la fila de la cabecera a la tabla
         tablaUsuarios.appendChild(filaCabecera);
 
@@ -218,14 +301,33 @@ function agregarUsuarioALaInterfaz(usuario) {
         window.location.href = `detalles.html?id=${usuario.id}`;
         
     });
-    // Agregar el botón a la celda
+     // Agregar el botón a la celda
     detallesCelda.appendChild(botonDetalles);
+    
+    const likeCelda = document.createElement("td");
+    const imagenLike = document.createElement("img");
+    imagenLike.src = "img/like.png";
+    imagenLike.alt = "Dar like";
+    imagenLike.style.width = "30px";
+    imagenLike.style.cursor = "pointer";
+
+    imagenLike.addEventListener("click", function () {
+
+        if (usuarioLogueado) {
+            darLike(usuarioLogueado.correo, usuario.correo, usuario.nombre);
+        } else {
+            alert("Debes estar logueado para dar like.");
+        }
+    });
+
+    likeCelda.appendChild(imagenLike);
+      
     // Agregar celdas a la fila del usuario
     filaUsuario.appendChild(fotoCelda);
     filaUsuario.appendChild(nombreCelda);
     filaUsuario.appendChild(edadCelda);
     filaUsuario.appendChild(detallesCelda);
-
+    filaUsuario.appendChild(likeCelda);
     // Agregar la fila del usuario a la tabla
     tablaUsuarios.appendChild(filaUsuario);
 }
