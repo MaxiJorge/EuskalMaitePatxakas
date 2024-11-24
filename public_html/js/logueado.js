@@ -15,6 +15,19 @@ document.addEventListener('DOMContentLoaded', function() {
         cerrarSesion();
     });
     
+    document.getElementById('buscar').addEventListener('click', function() {
+        window.location.href = 'buscarLogueado.html';
+    });
+    
+    document.getElementById('GeolocalizadoBtn').addEventListener('click', function() {
+        window.location.href = 'busquedaGeolocalizada.html';
+    });
+    
+    document.getElementById('AficionesBtn').addEventListener('click', function() {
+        window.location.href = 'busquedaAficiones.html';
+    });
+    
+    
     function cerrarSesion(){
         sessionStorage.clear();
         window.location.href = 'index.html';
