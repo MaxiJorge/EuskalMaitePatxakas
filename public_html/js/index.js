@@ -32,193 +32,197 @@ function crearBD() {
         //user.createIndex("foto", "foto", { unique: false });
 
         //LOS PIBES
-        user.add(
-                {
-                    correo: "david@adsi.com",
-                    nombre: "David",
-                    contrasena: "1234",
-                    edad: "20",
-                    genero: "H",
-                    ciudad: "Vitoria",
-                    foto: avatar01
-                }
-        );
+        user.add({
+            correo: "david@adsi.com",
+            nombre: "David",
+            contrasena: "1234",
+            edad: "20",
+            genero: "H",
+            ciudad: "Vitoria",
+            foto: avatar01,
+            lat: 42.84998,
+            lon: -2.67268
+        });
 
-        user.add(
-                {
-                    correo: "miguel@adsi.com",
-                    nombre: "Miguel",
-                    contrasena: "1234",
-                    edad: "33",
-                    genero: "H",
-                    ciudad: "Bilbo",
-                    foto: ""
-                }
-        );
+        user.add({
+            correo: "miguel@adsi.com",
+            nombre: "Miguel",
+            contrasena: "1234",
+            edad: "33",
+            genero: "H",
+            ciudad: "Bilbo",
+            foto: "",
+            lat: 43.26122,
+            lon: -2.93055
+        });
 
-        user.add(
-                {
-                    correo: "najum@adsi.com",
-                    nombre: "Najum",
-                    contrasena: "1234",
-                    edad: "20",
-                    genero: "H",
-                    ciudad: "Vitoria",
-                    foto: ""
-                }
-        );
+        user.add({
+            correo: "najum@adsi.com",
+            nombre: "Najum",
+            contrasena: "1234",
+            edad: "20",
+            genero: "H",
+            ciudad: "Vitoria",
+            foto: "",
+            lat: 42.85088,
+            lon: -2.67078
+        });
 
-        user.add(
-                {correo: "jorge@adsi.com",
-                    nombre: "Jorge",
-                    contrasena: "1234",
-                    edad: "20",
-                    genero: "H",
-                    ciudad: "Vitoria",
-                    foto: ""
-                });
-        user.add(
-                {
-                    correo: "marcos@adsi.com",
-                    nombre: "Marcos",
-                    contrasena: "1234",
-                    edad: "24",
-                    genero: "H",
-                    ciudad: "Bilbo",
-                    foto: ""
-                }
-        );
+        user.add({
+            correo: "jorge@adsi.com",
+            nombre: "Jorge",
+            contrasena: "1234",
+            edad: "20",
+            genero: "H",
+            ciudad: "Vitoria",
+            foto: "",
+            lat: 42.864968, // Nueva latitud, a menos de 1 km de las coordenadas originales
+            lon: -2.692234  // Nueva longitud, a menos de 1 km de las coordenadas originales
+        });
 
-        user.add(
-                {
-                    correo: "javi@adsi.com",
-                    nombre: "Javi",
-                    contrasena: "1234",
-                    edad: "26",
-                    genero: "H",
-                    ciudad: "Vitoria",
-                    foto: ""
-                }
-        );
+        user.add({
+            correo: "javi@adsi.com",
+            nombre: "Javi",
+            contrasena: "1234",
+            edad: "26",
+            genero: "H",
+            ciudad: "Vitoria",
+            foto: "",
+            lat: 42.862689, // Nueva latitud, a menos de 1 km de las coordenadas originales
+            lon: -2.690672  // Nueva longitud, a menos de 1 km de las coordenadas originales
+        });
 
-        user.add(
-                {
-                    correo: "pelayo@adsi.com",
-                    nombre: "Pelayo",
-                    contrasena: "1234",
-                    edad: "29",
-                    genero: "H",
-                    ciudad: "Donosti",
-                    foto: ""
-                }
-        );
+        user.add({
+            correo: "marcos@adsi.com",
+            nombre: "Marcos",
+            contrasena: "1234",
+            edad: "24",
+            genero: "H",
+            ciudad: "Bilbo",
+            foto: "",
+            lat: 43.26214,
+            lon: -2.93320
+        });
 
-        user.add(
-                {
-                    correo: "daniel@adsi.com",
-                    nombre: "Daniel",
-                    contrasena: "1234",
-                    edad: "31",
-                    genero: "H",
-                    ciudad: "Bilbo",
-                    foto: ""
-                }
-        );
-        //LAS MENTIROSAS
-        user.add(
-                {
-                    correo: "maria@adsi.com",
-                    nombre: "Maria",
-                    contrasena: "1234",
-                    edad: "23",
-                    genero: "M",
-                    ciudad: "Bilbo",
-                    foto: ""
-                }
-        );
+        user.add({
+            correo: "pelayo@adsi.com",
+            nombre: "Pelayo",
+            contrasena: "1234",
+            edad: "29",
+            genero: "H",
+            ciudad: "Vitoria",
+            foto: "",
+            lat: 42.873312,
+            lon: -2.681758
+        });
 
-        user.add(
-                {
-                    correo: "andrea@adsi.com",
-                    nombre: "Andrea",
-                    contrasena: "1234",
-                    edad: "18",
-                    genero: "M",
-                    ciudad: "Donosti",
-                    foto: ""
-                }
-        );
+        user.add({
+            correo: "daniel@adsi.com",
+            nombre: "Daniel",
+            contrasena: "1234",
+            edad: "31",
+            genero: "H",
+            ciudad: "Bilbo",
+            foto: "",
+            lat: 43.26034,
+            lon: -2.93611
+        });
 
-        user.add(
-                {
-                    correo: "sandra@adsi.com",
-                    nombre: "Sandra",
-                    contrasena: "1234",
-                    edad: "45",
-                    genero: "M",
-                    ciudad: "Donosti",
-                    foto: ""
-                }
-        );
+        user.add({
+            correo: "maria@adsi.com",
+            nombre: "Maria",
+            contrasena: "1234",
+            edad: "23",
+            genero: "M",
+            ciudad: "Bilbo",
+            foto: "",
+            lat: 43.26547,
+            lon: -2.93428
+        });
 
-        user.add(
-                {
-                    correo: "lucia@adsi.com",
-                    nombre: "Lucia",
-                    contrasena: "1234",
-                    edad: "50",
-                    genero: "M",
-                    ciudad: "Bilbo",
-                    foto: ""
-                }
-        );
-        user.add(
-                {
-                    correo: "carla@adsi.com",
-                    nombre: "Carla",
-                    contrasena: "1234",
-                    edad: "22",
-                    genero: "M",
-                    ciudad: "Bilbo",
-                    foto: ""
-                }
-        );
+        user.add({
+            correo: "andrea@adsi.com",
+            nombre: "Andrea",
+            contrasena: "1234",
+            edad: "18",
+            genero: "M",
+            ciudad: "Donosti",
+            foto: "",
+            lat: 43.32019,
+            lon: -1.97965
+        });
 
-        user.add(
-                {
-                    correo: "laura@adsi.com",
-                    nombre: "Laura",
-                    contrasena: "1234",
-                    edad: "27",
-                    genero: "M",
-                    ciudad: "Vitoria",
-                    foto: ""
-                }
-        );
+        user.add({
+            correo: "sandra@adsi.com",
+            nombre: "Sandra",
+            contrasena: "1234",
+            edad: "45",
+            genero: "M",
+            ciudad: "Donosti",
+            foto: "",
+            lat: 43.31735,
+            lon: -1.98012
+        });
 
-        user.add(
-                {
-                    correo: "beatriz@adsi.com",
-                    nombre: "Beatriz",
-                    contrasena: "1234",
-                    edad: "32",
-                    genero: "M",
-                    ciudad: "Donosti",
-                    foto: ""
-                }
-        );
+        user.add({
+            correo: "lucia@adsi.com",
+            nombre: "Lucia",
+            contrasena: "1234",
+            edad: "50",
+            genero: "M",
+            ciudad: "Bilbo",
+            foto: "",
+            lat: 43.26376,
+            lon: -2.93282
+        });
 
-        user.add(
-                {
-                    correo: "elena@adsi.com",
-                    nombre: "Elena",
-                    contrasena: "1234",
-                    edad: "29",
-                    genero: "M",
-                    ciudad: "Bilbo",
-                    foto: ""
-                }
-        );
+        user.add({
+            correo: "carla@adsi.com",
+            nombre: "Carla",
+            contrasena: "1234",
+            edad: "22",
+            genero: "M",
+            ciudad: "Bilbo",
+            foto: "",
+            lat: 43.26503,
+            lon: -2.93110
+        });
+
+        user.add({
+            correo: "laura@adsi.com",
+            nombre: "Laura",
+            contrasena: "1234",
+            edad: "27",
+            genero: "M",
+            ciudad: "Vitoria",
+            foto: "",
+            lat: 42.84945,
+            lon: -2.67456
+        });
+
+        user.add({
+            correo: "beatriz@adsi.com",
+            nombre: "Beatriz",
+            contrasena: "1234",
+            edad: "32",
+            genero: "M",
+            ciudad: "Donosti",
+            foto: "",
+            lat: 43.31911,
+            lon: -1.98200
+        });
+
+        user.add({
+            correo: "elena@adsi.com",
+            nombre: "Elena",
+            contrasena: "1234",
+            edad: "29",
+            genero: "M",
+            ciudad: "Bilbo",
+            foto: "",
+            lat: 43.26165,
+            lon: -2.93098
+        });
 
         
         // Crea el object store para Citas
