@@ -44,20 +44,19 @@ document.addEventListener('DOMContentLoaded', function () {
             const cursor = event.target.result;
             if (cursor) {
                 const aficion = cursor.value;
+                const li = document.createElement("li");
+                li.textContent = aficion.nombre;
+
                 if (!aficionesSeleccionadas.includes(aficion.nombre)) {
-                    const li = document.createElement("li");
-                    li.textContent = aficion.nombre;
-                    li.onclick = function () {
-                        agregarAficion(aficion.id, aficion.nombre);
-                    };
                     aficionesNoSeleccionadasList.appendChild(li);
+                    li.addEventListener("click", function () {
+                        agregarAficion(aficion.id, aficion.nombre);
+                    });
                 } else {
-                    const li = document.createElement("li");
-                    li.textContent = aficion.nombre;
-                    li.onclick = function () {
-                        eliminarAficion(aficion.id, aficion.nombre);
-                    };
                     aficionesSeleccionadasList.appendChild(li);
+                    li.addEventListener("click", function () {
+                        eliminarAficion(aficion.id, aficion.nombre);
+                    });
                 }
                 cursor.continue();
             }
@@ -70,10 +69,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const li = document.createElement("li");
         li.textContent = aficionNombre;
-        li.onclick = function () {
-            eliminarAficion(aficionId, aficionNombre);
-        };
         aficionesSeleccionadasList.appendChild(li);
+
+        // Añadir el evento para eliminar la afición
+        li.addEventListener("click", function () {
+            eliminarAficion(aficionId, aficionNombre);
+        });
 
         const items = aficionesNoSeleccionadasList.getElementsByTagName("li");
         for (let item of items) {
@@ -90,10 +91,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const li = document.createElement("li");
         li.textContent = aficionNombre;
-        li.onclick = function () {
-            agregarAficion(aficionId, aficionNombre);
-        };
         aficionesNoSeleccionadasList.appendChild(li);
+
+        // Añadir el evento para agregar la afición
+        li.addEventListener("click", function () {
+            agregarAficion(aficionId, aficionNombre);
+        });
 
         const items = aficionesSeleccionadasList.getElementsByTagName("li");
         for (let item of items) {
