@@ -383,40 +383,6 @@ function darLike(emailEmisor, emailReceptor, nombreReceptor) {
         const transaccion = db.transaction(["MeGusta"], "readwrite");
         const meGustaStore = transaccion.objectStore("MeGusta");
 
-        // Comprobar si ya hay un registro entre los dos usuarios con estado "2" (MATCH)
-        var indexUser1 = meGustaStore.index("user1");
-        var cursorRequest = indexUser1.openCursor(IDBKeyRange.only(emailEmisor));
-
-        cursorRequest.onsuccess = function (event) {
-            var cursor = event.target.result;
-
-            if (cursor) {
-                var registro = cursor.value;
-
-                // Comprobar si existe un MATCH entre los usuarios
-                if (registro.user2 === emailReceptor && registro.estado === "2") {
-                    alert(`¡Ya tienes un MATCH con ${nombreReceptor}!`);
-                    return; // Salir sin hacer nada más
-                }
-
-                cursor.continue();
-            } else {
-                // Si no hay MATCH previo, seguimos con el flujo normal
-                verificarLikePrevio(emailEmisor, emailReceptor, nombreReceptor, meGustaStore);
-            }
-        };
-    };
-}
-
-// Función para dar Like
-function darLike(emailEmisor, emailReceptor, nombreReceptor) {
-    const request = indexedDB.open("vitomaite02", 1);
-
-    request.onsuccess = function (evento) {
-        const db = evento.target.result;
-        const transaccion = db.transaction(["MeGusta"], "readwrite");
-        const meGustaStore = transaccion.objectStore("MeGusta");
-
         // Verificar si ya existe un registro donde el receptor dio like al emisor
         var indexUser2 = meGustaStore.index("user2");
         var cursorRequest = indexUser2.openCursor(IDBKeyRange.only(emailEmisor));
@@ -431,10 +397,11 @@ function darLike(emailEmisor, emailReceptor, nombreReceptor) {
                     if (registro.estado === "1") {
                         // Cambiar el estado a "2" para indicar un MATCH
                         registro.estado = "2";
+                        registro.fechaMatch = new Date().toISOString(); // Guardar la fecha del MATCH
                         var updateRequest = cursor.update(registro);
 
                         updateRequest.onsuccess = function () {
-                            alert(`¡MATCH! tu y ${nombreReceptor} habeis conectado!`);
+                            alert(`¡MATCH! tú y ${nombreReceptor} habéis conectado!`);
                         };
 
                         updateRequest.onerror = function (error) {
@@ -442,7 +409,7 @@ function darLike(emailEmisor, emailReceptor, nombreReceptor) {
                         };
                     } else if (registro.estado === "2") {
                         // Ya existe un MATCH
-                        alert(`¡Ya tienes un MATCH con ${nombreReceptor} ponte en contacto con el!`);
+                        alert(`¡Ya tienes un MATCH con ${nombreReceptor}, ponte en contacto con él/ella!`);
                     }
                     return; // Salir, ya no es necesario continuar
                 }
@@ -476,7 +443,8 @@ function darLike(emailEmisor, emailReceptor, nombreReceptor) {
             var nuevoLike = {
                 user1: correoEmisor,
                 user2: correoReceptor,
-                estado: "1" // Estado inicial
+                estado: "1", // Estado inicial
+                fecha: new Date().toISOString() // Guardar la fecha actual del like
             };
 
             var addRequest = meGustaStore.add(nuevoLike);

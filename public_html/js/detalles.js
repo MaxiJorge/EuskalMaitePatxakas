@@ -23,10 +23,19 @@ function initMap(lat, lng) {
 
     // Agregar un marcador para la ubicación del usuario
     new google.maps.Marker({
-        position: { lat, lng },
-        map,
-        title: "Ubicación del Usuario",
-    });
+    position: { lat, lng },
+    map,
+    title: "Ubicación del Usuario",
+    icon: {
+        path: google.maps.SymbolPath.CIRCLE, // Forma circular (puedes cambiar a otras opciones si quieres)
+        fillColor: '#808080', // Color gris
+        fillOpacity: 1, // Opacidad del relleno (1 es completamente sólido)
+        strokeColor: '#808080', // Borde gris
+        strokeWeight: 2, // Grosor del borde
+        scale: 8 // Tamaño del icono
+    }
+});
+
 }
 
 // Función para obtener los detalles del usuario desde IndexedDB

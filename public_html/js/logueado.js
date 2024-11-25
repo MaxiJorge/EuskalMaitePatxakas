@@ -107,3 +107,58 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
 });
+
+document.getElementById('verMatchesBtn').addEventListener('click', function() {
+    toggleMatches();
+});
+
+// Función para mostrar u ocultar los matches
+function toggleMatches() {
+    const tablaMatchesSeccion = document.getElementById('tablaMatchesSeccion');
+    
+    // Si la tabla está visible, la ocultamos, si no está visible, la mostramos
+    if (tablaMatchesSeccion.style.display === 'block') {
+        tablaMatchesSeccion.style.display = 'none';
+    } else {
+        // Mostrar tabla y llenar con datos
+        mostrarMisMatches();
+        tablaMatchesSeccion.style.display = 'block';
+    }
+}
+
+// Función para mostrar los matches que tiene el usuario logueado
+function mostrarMisMatches() {
+    const usuarioLogueado = JSON.parse(sessionStorage.getItem("usuarioLogueado"));
+    const emailLogueado = usuarioLogueado.correo;
+
+    const abrir = indexedDB.open("vitomaite02", 1);
+
+    abrir.onsuccess = function(event) {
+        const db = event.target.result;
+        const transaction = db.transaction(["MeGusta"], "readonly");
+        const meGustaStore = transaction.objectStore("MeGusta");
+
+        // Obtener todos los registros de likes
+        const request = meGustaStore.getAll();
+
+        request.onsuccess = function(event) {
+            const matches = event.target.result;
+            const tablaMatches = document.getElementById('tabla-matches');
+            tablaMatches.innerHTML = ''; // Limpiar la tabla antes de llenarla
+
+            // Filtrar los matches donde el usuario logueado está involucrado
+            matches.forEach(match => {
+                if ((match.user1 === emailLogueado || match.user2 === emailLogueado) && match.estado === "2") {
+                    const otroUsuario = (match.user1 === emailLogueado) ? match.user2 : match.user1;
+                    const fila = document.createElement('tr');
+                    fila.innerHTML = `
+                        <td>${match.fechaMatch || 'Fecha desconocida'}</td>
+                        <td>${otroUsuario}</td>
+                    `;
+                    tablaMatches.appendChild(fila);
+                }
+            });
+        };
+    };
+}
+
