@@ -4,22 +4,54 @@ function obtenerIdDesdeURL() {
     return params.get('id');
 }
 
+// Función para inicializar el mapa de Google
+function initMap(lat, lng) {
+    const mapContainer = document.createElement("div");
+    mapContainer.id = "map";
+    mapContainer.style.height = "300px";
+    mapContainer.style.width = "100%";
+
+    // Agregar el contenedor del mapa debajo de los detalles del usuario
+    const detallesDiv = document.getElementById("detallesUsuario");
+    detallesDiv.appendChild(mapContainer);
+
+    // Inicializar el mapa
+    const map = new google.maps.Map(mapContainer, {
+        zoom: 14,
+        center: { lat, lng },
+    });
+
+    // Agregar un marcador para la ubicación del usuario
+    new google.maps.Marker({
+        position: { lat, lng },
+        map,
+        title: "Ubicación del Usuario",
+    });
+}
+
 // Función para obtener los detalles del usuario desde IndexedDB
 function obtenerDetallesUsuario(id) {
     const request = indexedDB.open('vitomaite02', 1); // Abrir la base de datos
 
-    request.onsuccess = function(event) {
+    request.onsuccess = function (event) {
         const db = event.target.result;
         const transaction = db.transaction('Usuario', 'readonly');
         const store = transaction.objectStore('Usuario');
         const userRequest = store.get(id); // Obtener el usuario por su id
 
-        userRequest.onsuccess = function() {
+        userRequest.onsuccess = function () {
             const usuario = userRequest.result;
 
             if (usuario) {
                 // Actualizar la vista con los detalles del usuario
                 actualizarDetallesUsuario(usuario);
+
+                // Mostrar la ubicación del usuario en el mapa
+                if (usuario.lat && usuario.lon) {
+                    initMap(usuario.lat, usuario.lon);
+                } else {
+                    console.warn("El usuario no tiene ubicación registrada.");
+                }
 
                 // Obtener las aficiones del usuario
                 obtenerAficiones(usuario.correo);
@@ -28,12 +60,12 @@ function obtenerDetallesUsuario(id) {
             }
         };
 
-        userRequest.onerror = function() {
+        userRequest.onerror = function () {
             console.error("Error al obtener el usuario desde IndexedDB");
         };
     };
 
-    request.onerror = function() {
+    request.onerror = function () {
         console.error("Error al abrir la base de datos IndexedDB");
     };
 }
@@ -41,14 +73,14 @@ function obtenerDetallesUsuario(id) {
 // Función para actualizar los detalles del usuario en el HTML
 function actualizarDetallesUsuario(usuario) {
     var detallesDiv = document.getElementById('detallesUsuario');
-    
+
     // Foto por defecto si no tienen ninguna añadida en IndexedDB
     var fotoUsuario;
     if (usuario.genero === 'H') {
         fotoUsuario = 'img/avatar001.png';
     } else if (usuario.genero === 'M') {
-        fotoUsuario = 'img/avatar002.png'; 
-    } 
+        fotoUsuario = 'img/avatar002.png';
+    }
 
     // Llenar detallesUsuario en HTML
     detallesDiv.innerHTML = `
@@ -69,7 +101,7 @@ function actualizarDetallesUsuario(usuario) {
 function obtenerAficiones(correoUsuario) {
     const request = indexedDB.open("vitomaite02", 1); // Abrir la base de datos
 
-    request.onsuccess = function(event) {
+    request.onsuccess = function (event) {
         const db = event.target.result;
         const transaction = db.transaction(["Usuario_Aficion", "Afición"], "readonly");
 
@@ -83,7 +115,7 @@ function obtenerAficiones(correoUsuario) {
 
         let aficionesIds = [];
 
-        requestUsuarioAficion.onsuccess = function(event) {
+        requestUsuarioAficion.onsuccess = function (event) {
             const cursor = event.target.result;
             if (cursor) {
                 aficionesIds.push(cursor.value.aficion); // Guardamos los IDs de las aficiones
@@ -94,12 +126,12 @@ function obtenerAficiones(correoUsuario) {
             }
         };
 
-        requestUsuarioAficion.onerror = function() {
+        requestUsuarioAficion.onerror = function () {
             console.error("Error al buscar las aficiones del usuario");
         };
     };
 
-    request.onerror = function(event) {
+    request.onerror = function (event) {
         console.error("Error al abrir la base de datos:", event.target.errorCode);
     };
 }
@@ -112,7 +144,7 @@ function obtenerNombresAficiones(aficionesIds, aficionStore) {
     aficionesIds.forEach(id => {
         const request = aficionStore.get(id);
 
-        request.onsuccess = function(event) {
+        request.onsuccess = function (event) {
             const aficion = event.target.result;
             if (aficion) {
                 aficionesNombres.push(aficion.nombre); // Añadimos el nombre de la afición al array
@@ -124,12 +156,11 @@ function obtenerNombresAficiones(aficionesIds, aficionStore) {
             }
         };
 
-        request.onerror = function() {
+        request.onerror = function () {
             console.error("Error al obtener una afición");
         };
     });
 }
-
 
 // Función para mostrar las aficiones en el HTML
 function mostrarAficiones(aficionesNombres) {
@@ -158,11 +189,10 @@ function mostrarAficiones(aficionesNombres) {
     detallesDiv.appendChild(aficionesContainer);
 }
 
-
 // Función para volver a la página anterior
-document.getElementById('btnAtras').addEventListener('click', function(event) {
-    event.preventDefault();  
-    window.history.back();   
+document.getElementById('btnAtras').addEventListener('click', function (event) {
+    event.preventDefault();
+    window.history.back();
 });
 
 // Obtener el id del usuario desde la URL
@@ -175,3 +205,4 @@ if (usuarioId) {
 } else {
     console.error("No se encontró el id del usuario");
 }
+

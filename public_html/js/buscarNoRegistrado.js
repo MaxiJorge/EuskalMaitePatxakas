@@ -146,6 +146,8 @@ function obtenerUsuariosPorCriterios(generoSeleccionado, edadMin, edadMax, ciuda
     };
 }
 
+
+
 function agregarUsuarioALaInterfaz(usuario) {
     var contenedorUsuarios = document.getElementById("tablaSolteros"); 
 
@@ -169,14 +171,19 @@ function agregarUsuarioALaInterfaz(usuario) {
         var edadCabecera = document.createElement("th");
         edadCabecera.textContent = "Edad";
 
-        
+        var detallesCabecera = document.createElement("th");
+        detallesCabecera.textContent = "Mas información";
+
+        var likeCabecera = document.createElement("th");
+        likeCabecera.textContent = "Me Gusta";
         
 
         // Agregar celdas de la cabecera
         filaCabecera.appendChild(fotoCabecera);
         filaCabecera.appendChild(nombreCabecera);
         filaCabecera.appendChild(edadCabecera);
-        
+        filaCabecera.appendChild(detallesCabecera);
+        filaCabecera.appendChild(likeCabecera);
         // Agregar la fila de la cabecera a la tabla
         tablaUsuarios.appendChild(filaCabecera);
 
@@ -193,19 +200,58 @@ function agregarUsuarioALaInterfaz(usuario) {
 
     var edadCelda = document.createElement("td");
     edadCelda.textContent = usuario.edad;
+    
+    // Foto por defecto si no tienen ninguna añadida en IndexedDB
+    var fotoGenero;
+    if (usuario.genero === 'H') {
+        fotoGenero = 'img/avatar001.png';
+    } else if (usuario.genero === 'M') {
+        fotoGenero = 'img/avatar002.png';
+    }
 
     var fotoCelda = document.createElement("td");
     var fotoUsuario = document.createElement("img");
-    fotoUsuario.src =  usuario.foto;
+    fotoUsuario.src =  usuario.foto || fotoGenero;
     fotoUsuario.alt = "Foto de usuario";
     fotoCelda.appendChild(fotoUsuario);
+    // Reducir el tamaño de la imagen (PASAR A CSS)
+    fotoUsuario.style.width = "100px";  // Establecer ancho
+    fotoUsuario.style.height = "100px"; // Establecer alto
+    fotoUsuario.style.objectFit = "cover"; // Asegura que la imagen se ajuste correctamente sin deformarse
+    
+    fotoUsuario.style.filter = "blur(5px)"; // Difumina la imagen con un radio de 5px
+    fotoUsuario.style.opacity = "0.7"; // Ajusta la opacidad para un efecto más tenue
+    fotoUsuario.style.transition = "filter 0.3s, opacity 0.3s"; // Transición suave al cambiar el estilo
 
+    var detallesCelda = document.createElement("td");
+    var botonDetalles = document.createElement("button");
+    botonDetalles.textContent = "Detalles";
+    botonDetalles.className = "btn-detalles";
+
+    botonDetalles.addEventListener('click', function () {
+        //Guarda el usuario del que vamos a coger los detalle en localStorage
+        alert("Debes estar logueado para ver los detalles del usuario");
+
+    });
+    
+    const likeCelda = document.createElement("td");
+    // Crear el botón like
+    const likeButton = document.createElement("button");
+    likeButton.classList.add("like-button");
+
+    likeButton.addEventListener("click", function () {
+        alert("Debes estar logueado para dar like a un usuario");
+    });
+    likeCelda.appendChild(likeButton);
+    
+     // Agregar el botón a la celda
+    detallesCelda.appendChild(botonDetalles);
     // Agregar celdas a la fila del usuario
     filaUsuario.appendChild(fotoCelda);
     filaUsuario.appendChild(nombreCelda);
     filaUsuario.appendChild(edadCelda);
-    
-
+    filaUsuario.appendChild(detallesCelda);
+    filaUsuario.appendChild(likeCelda);
     // Agregar la fila del usuario a la tabla
     tablaUsuarios.appendChild(filaUsuario);
 }

@@ -332,3 +332,7 @@ td {
             align-items: center;
             height: 100vh; /* Altura de la pantalla */
         }
+
+        .tabla-seccion {
+            display: none;
+        }

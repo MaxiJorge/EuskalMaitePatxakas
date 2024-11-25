@@ -76,8 +76,8 @@ function crearBD() {
             genero: "H",
             ciudad: "Vitoria",
             foto: "",
-            lat: 42.864968, // Nueva latitud, a menos de 1 km de las coordenadas originales
-            lon: -2.692234  // Nueva longitud, a menos de 1 km de las coordenadas originales
+            lat: 42.864968, 
+            lon: -2.692234  
         });
 
         user.add({
@@ -88,8 +88,8 @@ function crearBD() {
             genero: "H",
             ciudad: "Vitoria",
             foto: "",
-            lat: 42.862689, // Nueva latitud, a menos de 1 km de las coordenadas originales
-            lon: -2.690672  // Nueva longitud, a menos de 1 km de las coordenadas originales
+            lat: 42.862689, 
+            lon: -2.690672  
         });
 
         user.add({

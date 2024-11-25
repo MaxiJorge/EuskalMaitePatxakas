@@ -245,6 +245,14 @@ function obtenerUsuariosPorCriterios(generoSeleccionado, edadMin, edadMax, ciuda
     };
 }
 
+// Foto por defecto si no tienen ninguna añadida en IndexedDB
+    var fotoGenero;
+    if (usuario.genero === 'H') {
+        fotoGenero = 'img/avatar001.png';
+    } else if (usuario.genero === 'M') {
+        fotoGenero = 'img/avatar002.png';
+    }
+
 function agregarUsuarioALaInterfaz(usuario) {
     var contenedorUsuarios = document.getElementById("tablaSolteros"); // Cambié contenedorUsuarios por tablaSolteros
 
@@ -296,11 +304,22 @@ function agregarUsuarioALaInterfaz(usuario) {
     var edadCelda = document.createElement("td");
     edadCelda.textContent = usuario.edad;
 
+    var fotoGenero;
+    if (usuario.genero === 'H') {
+        fotoGenero = 'img/avatar001.png';
+    } else if (usuario.genero === 'M') {
+        fotoGenero = 'img/avatar002.png';
+    }
+
     var fotoCelda = document.createElement("td");
     var fotoUsuario = document.createElement("img");
-    fotoUsuario.src = usuario.foto;
+    fotoUsuario.src =  usuario.foto || fotoGenero;
     fotoUsuario.alt = "Foto de usuario";
     fotoCelda.appendChild(fotoUsuario);
+    // Reducir el tamaño de la imagen
+    fotoUsuario.style.width = "100px";  // Establecer ancho
+    fotoUsuario.style.height = "100px"; // Establecer alto
+    fotoUsuario.style.objectFit = "cover"; // Asegura que la imagen se ajuste correctamente sin deformarse
 
     var detallesCelda = document.createElement("td");
     var botonDetalles = document.createElement("button");

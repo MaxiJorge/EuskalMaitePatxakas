@@ -31,6 +31,27 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         };
     };
+    
+    
+    var botonCerrarSesion = document.getElementById('botonCerrarSesion');
+    var atrasBtn = document.getElementById("atrasBtn");
+    
+    botonCerrarSesion.addEventListener('click', function () {
+
+        cerrarSesion();
+    });
+
+    function cerrarSesion() {
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+    }
+
+    atrasBtn.addEventListener("click", function () {
+
+        window.location.href = 'logueado.html';
+
+    });
+
 
     function cargarAficionesNoSeleccionadas(aficionesSeleccionadas, db) {
         const aficionesNoSeleccionadasList = document.getElementById("no-seleccionadas-list");

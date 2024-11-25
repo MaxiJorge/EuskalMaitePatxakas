@@ -9,6 +9,16 @@ document.addEventListener('DOMContentLoaded', function () {
     cargarAficiones(); // Cargar las aficiones desde la base de datos
 });
 
+//Boton atrás
+var atrasBtn = document.getElementById("atrasBtn");
+
+
+atrasBtn.addEventListener("click", function () {
+
+    window.location.href = 'logueado.html';
+
+});
+
 // Función para generar las opciones en un rango específico
 function generarOpcionesEdad(selectId, minEdad, maxEdad) {
     var select = document.getElementById(selectId);
@@ -291,7 +301,7 @@ function agregarUsuarioALaInterfaz(usuario) {
 
         var detallesCabecera = document.createElement("th");
         detallesCabecera.textContent = "Mas información";
-        
+
         var likeCabecera = document.createElement("th");
         likeCabecera.textContent = "Me Gusta";
         // Agregar celdas de la cabecera
@@ -319,41 +329,41 @@ function agregarUsuarioALaInterfaz(usuario) {
 
     var fotoCelda = document.createElement("td");
     var fotoUsuario = document.createElement("img");
-    fotoUsuario.src = usuario.foto;
+    fotoUsuario.src =  usuario.foto || fotoGenero;
     fotoUsuario.alt = "Foto de usuario";
     fotoCelda.appendChild(fotoUsuario);
-    
+    // Reducir el tamaño de la imagen
+    fotoUsuario.style.width = "100px";  // Establecer ancho
+    fotoUsuario.style.height = "100px"; // Establecer alto
+    fotoUsuario.style.objectFit = "cover"; // Asegura que la imagen se ajuste correctamente sin deformarse
+
     var detallesCelda = document.createElement("td");
     var botonDetalles = document.createElement("button");
     botonDetalles.textContent = "Detalles";
     botonDetalles.className = "btn-detalles";
-    
+
     botonDetalles.addEventListener('click', function () {
         //Guarda el usuario del que vamos a coger los detalle en localStorage
         window.location.href = `detalles.html?id=${usuario.id}`;
-        
+
     });
      // Agregar el botón a la celda
     detallesCelda.appendChild(botonDetalles);
-    
+
     const likeCelda = document.createElement("td");
-    const imagenLike = document.createElement("img");
-    imagenLike.src = "img/like.png";
-    imagenLike.alt = "Dar like";
-    imagenLike.style.width = "30px";
-    imagenLike.style.cursor = "pointer";
+    // Crear el botón like
+    const likeButton = document.createElement("button");
+    likeButton.classList.add("like-button");
 
-    imagenLike.addEventListener("click", function () {
-
+    likeButton.addEventListener("click", function () {
         if (usuarioLogueado) {
             darLike(usuarioLogueado.correo, usuario.correo, usuario.nombre);
         } else {
             alert("Debes estar logueado para dar like.");
         }
     });
+    likeCelda.appendChild(likeButton);
 
-    likeCelda.appendChild(imagenLike);
-      
     // Agregar celdas a la fila del usuario
     filaUsuario.appendChild(fotoCelda);
     filaUsuario.appendChild(nombreCelda);
@@ -398,45 +408,86 @@ function darLike(emailEmisor, emailReceptor, nombreReceptor) {
     };
 }
 
-function verificarLikePrevio(emailEmisor, emailReceptor, nombreReceptor, meGustaStore) {
-    // Comprobar si ya existe un like dado por el emisor al receptor
-    var indexUser1 = meGustaStore.index("user1");
-    var cursorRequest = indexUser1.openCursor(IDBKeyRange.only(emailEmisor));
+// Función para dar Like
+function darLike(emailEmisor, emailReceptor, nombreReceptor) {
+    const request = indexedDB.open("vitomaite02", 1);
 
-    cursorRequest.onsuccess = function (event) {
-        var cursor = event.target.result;
+    request.onsuccess = function (evento) {
+        const db = evento.target.result;
+        const transaccion = db.transaction(["MeGusta"], "readwrite");
+        const meGustaStore = transaccion.objectStore("MeGusta");
 
-        if (cursor) {
-            var registro = cursor.value;
+        // Verificar si ya existe un registro donde el receptor dio like al emisor
+        var indexUser2 = meGustaStore.index("user2");
+        var cursorRequest = indexUser2.openCursor(IDBKeyRange.only(emailEmisor));
 
-            if (registro.user2 === emailReceptor) {
-                alert(`Ya has dado like a ${nombreReceptor}.`);
-                return; // Salir sin hacer nada más
+        cursorRequest.onsuccess = function (event) {
+            var cursor = event.target.result;
+            if (cursor) {
+                var registro = cursor.value;
+
+                // Verificar si el receptor ya dio like al emisor
+                if (registro.user1 === emailReceptor) {
+                    if (registro.estado === "1") {
+                        // Cambiar el estado a "2" para indicar un MATCH
+                        registro.estado = "2";
+                        var updateRequest = cursor.update(registro);
+
+                        updateRequest.onsuccess = function () {
+                            alert(`¡MATCH! tu y ${nombreReceptor} habeis conectado!`);
+                        };
+
+                        updateRequest.onerror = function (error) {
+                            console.error("Error al actualizar el estado del like: ", error);
+                        };
+                    } else if (registro.estado === "2") {
+                        // Ya existe un MATCH
+                        alert(`¡Ya tienes un MATCH con ${nombreReceptor} ponte en contacto con el!`);
+                    }
+                    return; // Salir, ya no es necesario continuar
+                }
+                cursor.continue();
+            } else {
+                // Verificar si el emisor ya ha dado like al receptor previamente
+                var indexUser1 = meGustaStore.index("user1");
+                var cursorRequestUser1 = indexUser1.openCursor(IDBKeyRange.only(emailEmisor));
+
+                cursorRequestUser1.onsuccess = function (event) {
+                    var cursorUser1 = event.target.result;
+                    if (cursorUser1) {
+                        var registro = cursorUser1.value;
+
+                        if (registro.user2 === emailReceptor) {
+                            // Ya se dio un like previamente
+                            alert(`Ya has dado like a ${nombreReceptor}.`);
+                            return;
+                        }
+                        cursorUser1.continue();
+                    } else {
+                        // Si no hay registros previos, agregar un nuevo like
+                        agregarNuevoLike(emailEmisor, emailReceptor, meGustaStore);
+                    }
+                };
             }
+        };
 
-            cursor.continue();
-        } else {
-            // Si no hay registro previo, damos un nuevo like
-            agregarNuevoLike(emailEmisor, emailReceptor, nombreReceptor, meGustaStore);
+        function agregarNuevoLike(correoEmisor, correoReceptor, meGustaStore) {
+            // Crear un nuevo registro de like
+            var nuevoLike = {
+                user1: correoEmisor,
+                user2: correoReceptor,
+                estado: "1" // Estado inicial
+            };
+
+            var addRequest = meGustaStore.add(nuevoLike);
+
+            addRequest.onsuccess = function () {
+                alert(`Has dado like a ${nombreReceptor}!`);
+            };
+
+            addRequest.onerror = function (error) {
+                console.error("Error al guardar el like: ", error);
+            };
         }
-    };
-}
-
-function agregarNuevoLike(emailEmisor, emailReceptor, nombreReceptor, meGustaStore) {
-    // Crear un nuevo registro de like
-    var nuevoLike = {
-        user1: emailEmisor,
-        user2: emailReceptor,
-        estado: "1" // Estado inicial
-    };
-
-    var addRequest = meGustaStore.add(nuevoLike);
-
-    addRequest.onsuccess = function () {
-        alert(`Has dado like a ${nombreReceptor}.`);
-    };
-
-    addRequest.onerror = function (error) {
-        console.error("Error al guardar el like: ", error);
     };
 }

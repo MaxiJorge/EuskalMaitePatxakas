@@ -12,6 +12,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+var botonCerrarSesion = document.getElementById('botonCerrarSesion');
+
+botonCerrarSesion.addEventListener('click', function () {
+
+    cerrarSesion();
+});
+
+function cerrarSesion(){
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+    }
+
 
 function atrasPagina() {
     event.preventDefault();

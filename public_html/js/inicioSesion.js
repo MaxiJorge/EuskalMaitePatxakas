@@ -44,9 +44,8 @@ function iniciarSesion() {
                     
                     
                     sessionStorage.setItem('usuarioLogueado', JSON.stringify(user));
-                    
-                    
                     window.location.href = 'logueado.html';
+                    
                 } else {
                     
                     alert('La contraseña es incorrecta.');

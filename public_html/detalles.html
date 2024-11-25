@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles del Usuario - VitoMaite</title>
-    <link rel="stylesheet" href="css/estilos.css"> <!-- Estilos -->
+    <link rel="stylesheet" href="css/estilos.css">
     <link rel="icon" type="image/ico" href="img/favicon.ico"/>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbLNU4A5lwf_3_7y28eWHMARRlEn6fvCU"></script>
 </head>
-
 <body>
 
     <header>
@@ -17,7 +17,6 @@
         </div>
         <h1 class="titulo-cita">Detalles del Usuario</h1>
         <nav>
-            
             <a href="">Sobre Nosotros</a>
             <a href="">Contacto</a>
             <a href="" id="btnAtras">Atrás</a>
@@ -29,10 +28,16 @@
     </div>
     
     <div>
-    <ul id="listaAficiones">
-        <!-- Aquí se llenarán las aficiones del usuario -->
-    </ul>
+        <ul id="listaAficiones">
+            <!-- Aquí se llenarán las aficiones del usuario -->
+        </ul>
     </div>
+
+    <!-- Contenedor del mapa -->
+    <div class="map-container">
+        <div id="map" style="width: 100%; height: 400px;"></div>
+    </div>
+    
     <footer>
         <div>© 2024 VitoMaite. Todos los derechos reservados.</div>
     </footer>

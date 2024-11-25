@@ -14,12 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const saludoDiv = document.getElementById('saludo');
     saludoDiv.textContent = `Hola, ${usuarioLogueado.nombre}`;
 
-
-    // Manejar el cierre de sesión
-    document.getElementById('cerrarSesion').addEventListener('click', function() {
-        cerrarSesion();
-    });
-    
     document.getElementById('buscar').addEventListener('click', function() {
         window.location.href = 'buscarLogueado.html';
     });
@@ -32,10 +26,18 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'busquedaAficiones.html';
     });
     
+    var botonCerrarSesion = document.getElementById('botonCerrarSesion');
+    
     function cerrarSesion(){
         sessionStorage.clear();
         window.location.href = 'index.html';
     }
+    
+    botonCerrarSesion.addEventListener('click', function () {
+
+    cerrarSesion();
+});
+
     
     // Redirigir al buscarLogueado.html
     document.getElementById('Perfil').addEventListener('click', function() {

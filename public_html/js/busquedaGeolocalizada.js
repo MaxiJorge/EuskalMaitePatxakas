@@ -1,6 +1,19 @@
 // Coordenadas de referencia (en este caso, las del usuario logueado)
 let latRef, lonRef;
 
+//Boton cerrar sesión
+var botonCerrarSesion = document.getElementById('botonCerrarSesion');
+
+botonCerrarSesion.addEventListener('click', function () {
+
+    cerrarSesion();
+});
+
+function cerrarSesion(){
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+    }
+    
 // Función para calcular la distancia entre dos puntos geográficos usando Haversine
 function calcularDistancia(lat1, lon1, lat2, lon2) {
     const R = 6371; // Radio de la Tierra en kilómetros
@@ -42,7 +55,7 @@ function initMap() {
                     fillOpacity: 1,
                     strokeColor: 'red',
                     strokeWeight: 2,
-                    scale: 7  // Ajusta el tamaño del marcador
+                    scale: 10  // Ajusta el tamaño del marcador
                 }
             });
             
