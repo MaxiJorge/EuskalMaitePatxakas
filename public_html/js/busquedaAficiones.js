@@ -364,3 +364,79 @@ function agregarUsuarioALaInterfaz(usuario) {
     tablaUsuarios.appendChild(filaUsuario);
 }
 
+// Función para dar Like
+function darLike(emailEmisor, emailReceptor, nombreReceptor) {
+    const request = indexedDB.open("vitomaite02", 1);
+
+    request.onsuccess = function (evento) {
+        const db = evento.target.result;
+        const transaccion = db.transaction(["MeGusta"], "readwrite");
+        const meGustaStore = transaccion.objectStore("MeGusta");
+
+        // Comprobar si ya hay un registro entre los dos usuarios con estado "2" (MATCH)
+        var indexUser1 = meGustaStore.index("user1");
+        var cursorRequest = indexUser1.openCursor(IDBKeyRange.only(emailEmisor));
+
+        cursorRequest.onsuccess = function (event) {
+            var cursor = event.target.result;
+
+            if (cursor) {
+                var registro = cursor.value;
+
+                // Comprobar si existe un MATCH entre los usuarios
+                if (registro.user2 === emailReceptor && registro.estado === "2") {
+                    alert(`¡Ya tienes un MATCH con ${nombreReceptor}!`);
+                    return; // Salir sin hacer nada más
+                }
+
+                cursor.continue();
+            } else {
+                // Si no hay MATCH previo, seguimos con el flujo normal
+                verificarLikePrevio(emailEmisor, emailReceptor, nombreReceptor, meGustaStore);
+            }
+        };
+    };
+}
+
+function verificarLikePrevio(emailEmisor, emailReceptor, nombreReceptor, meGustaStore) {
+    // Comprobar si ya existe un like dado por el emisor al receptor
+    var indexUser1 = meGustaStore.index("user1");
+    var cursorRequest = indexUser1.openCursor(IDBKeyRange.only(emailEmisor));
+
+    cursorRequest.onsuccess = function (event) {
+        var cursor = event.target.result;
+
+        if (cursor) {
+            var registro = cursor.value;
+
+            if (registro.user2 === emailReceptor) {
+                alert(`Ya has dado like a ${nombreReceptor}.`);
+                return; // Salir sin hacer nada más
+            }
+
+            cursor.continue();
+        } else {
+            // Si no hay registro previo, damos un nuevo like
+            agregarNuevoLike(emailEmisor, emailReceptor, nombreReceptor, meGustaStore);
+        }
+    };
+}
+
+function agregarNuevoLike(emailEmisor, emailReceptor, nombreReceptor, meGustaStore) {
+    // Crear un nuevo registro de like
+    var nuevoLike = {
+        user1: emailEmisor,
+        user2: emailReceptor,
+        estado: "1" // Estado inicial
+    };
+
+    var addRequest = meGustaStore.add(nuevoLike);
+
+    addRequest.onsuccess = function () {
+        alert(`Has dado like a ${nombreReceptor}.`);
+    };
+
+    addRequest.onerror = function (error) {
+        console.error("Error al guardar el like: ", error);
+    };
+}
