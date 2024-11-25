@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Botones
 var botonCerrarSesion = document.getElementById('botonCerrarSesion');
 var buscarBtn = document.getElementById("buscarBtn");
-
+var atrasBtn = document.getElementById("atrasBtn");
 //Usuario en SessionStorage
 var usuarioLogueado = JSON.parse(sessionStorage.getItem("usuarioLogueado"));
 botonCerrarSesion.addEventListener('click', function () {
@@ -23,6 +23,13 @@ buscarBtn.addEventListener("click", function () {
     buscarUsuariosPorCriterios();
 
 });
+
+atrasBtn.addEventListener("click", function () {
+
+    window.location.href = 'logueado.html';
+
+});
+
 
 // Función para dar Like
 function darLike(emailEmisor, emailReceptor, nombreReceptor) {
