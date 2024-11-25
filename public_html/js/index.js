@@ -19,18 +19,18 @@ function crearBD() {
     abrir.onupgradeneeded = function(event) {
         
         var db = event.target.result;
-
+        
         // Crea el object store para Usuarios con clave primaria "id" autoincrementable
         var user = db.createObjectStore("Usuario", { keyPath: "id", autoIncrement: true });
         
         user.createIndex("correo", "correo", { unique: true });
         user.createIndex("nombre", "nombre", { unique: false });
         user.createIndex("contrasena", "contrasena", { unique: false });
-        //user.createIndex("edad", "edad", { unique: false });
         user.createIndex("genero", "genero", { unique: false});
         user.createIndex("ciudad", "ciudad", { unique: false});
-        //user.createIndex("foto", "foto", { unique: false });
-
+        user.createIndex("lat", "lat", { unique: false });
+        user.createIndex("lon", "lon", { unique: false });
+        
         //LOS PIBES
         user.add({
             correo: "david@adsi.com",
@@ -43,7 +43,7 @@ function crearBD() {
             lat: 42.84998,
             lon: -2.67268
         });
-
+        
         user.add({
             correo: "miguel@adsi.com",
             nombre: "Miguel",

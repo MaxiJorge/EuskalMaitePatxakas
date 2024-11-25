@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login No Premium</title>
     <link rel="stylesheet" href="css/estilos.css"> <!-- Enlazando el archivo de estilos -->
+    <title>Login No Premium</title>
+    <link rel="icon" type="image/ico" href="img/favicon.ico"/>
     <style>
         /* Ocultar las tablas inicialmente */
         .tabla-seccion {
@@ -16,15 +17,15 @@
     <header>
         <h2 class="titulo-pagina">Login No Premium</h2>
         <div class="perfil">
-            <img src="img/default-profile.png" alt="Foto de perfil" class="foto-perfil">
+            <img id="fotoPerfil" src="" alt="Foto de perfil" class="foto-perfil">
             <button id="cerrarSesion">Cerrar Sesión</button>
         </div>
     </header>
-
+    
     <main>
         <!-- Saludo personalizado -->
         <div id="saludo"></div>
-
+        
         <!-- Botones principales -->
         <div class="botones-principales">
             <button id="misLikes">MIS LIKES</button>
