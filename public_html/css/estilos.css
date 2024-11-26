@@ -1,4 +1,8 @@
 
+#atrasBtn:hover, #botonInicio:hover{
+    background-color: #bcbcbc;
+}
+
 body {
     
     font-family: Arial, sans-serif;
@@ -584,10 +588,6 @@ td {
     color: white;
 }
 
-#atrasBtn:hover, #botonInicio:hover{
-    background-color: #bcbcbc;
-}
-
 #botonLogin2:hover, #botonLimpiar2:hover {
     background-color: #e84393;
 }
@@ -606,7 +606,6 @@ td {
         width: 100%;
     }
 }
-
 
 
 /******************************************************************************/

@@ -36,7 +36,7 @@ function initMap(lat, lng) {
     // Inicializar el mapa
     const map = new google.maps.Map(mapContainer, {
         zoom: 14,
-        center: { lat, lng },
+        center: { lat, lng }
     });
 
     // Agregar un marcador para la ubicación del usuario
