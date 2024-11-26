@@ -1,7 +1,6 @@
 
 body {
     
-   
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -193,7 +192,7 @@ th {
 }
 /*Estilo botones index*/
 
-/* ********************Estilos foto*************************** */
+/* ********************Estilos editar perfil foto*************************** */
 /* Estilo para el área de Drag and Drop */
 #dropZone {
     width: 300px;
@@ -340,8 +339,7 @@ td {
         /****************************************************************/
         /***************BUSCAR NO LOGUEADO*******************************/
         /****************************************************************/
-        /* *********** Estilos Globales *********** */
-    .pagina-busqueda body {
+    .pagina-busqueda main {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -525,7 +523,7 @@ td {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Asegura que los elementos estén alineados al principio */
+    justify-content: flex-start; /* Alinea el contenido hacia la parte superior */
     height: 100vh; /* Altura de la pantalla completa */
     background-color: #f3e5f5;
     margin: 0;
@@ -538,7 +536,11 @@ td {
     gap: 10px; /* Reduce el espacio entre los campos */
     width: 100%;
     max-width: 400px; /* Limita el tamaño máximo del formulario */
-    margin-top: 20px; /* Reduce el espacio superior para acercarlo más al borde */
+    margin-top: 30px; /* Aumenta el espacio superior para que la caja suba un poco */
+    padding: 20px; /* Añade espacio interno dentro del formulario */
+    border: 2px solid #ccc; /* Borde alrededor del formulario */
+    border-radius: 8px; /* Bordes redondeados para el recuadro */
+    background-color: white; /* Fondo blanco para el formulario */
 }
 
 #formulario-inicioSesion label {
@@ -550,8 +552,7 @@ td {
 
 #formulario-inicioSesion input {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px; /* Reduce el espacio inferior entre los campos */
+    padding: 4px; /* Aumenta el padding para que los textos no choquen con el borde */
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
@@ -583,6 +584,10 @@ td {
     color: white;
 }
 
+#atrasBtn:hover, #botonInicio:hover{
+    background-color: #bcbcbc;
+}
+
 #botonLogin2:hover, #botonLimpiar2:hover {
     background-color: #e84393;
 }
@@ -603,19 +608,197 @@ td {
 }
 
 
+
 /******************************************************************************/
 /************************************LOGUEADO**********************************/
 /******************************************************************************/
+
+
 /* Estilos para el header */
 /* Estilo para el header logueado */
-/* Estilo para el header logueado */
+/************************** HEADER **************************/
+
 .logueado header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-between; /* Mantiene espacio entre logo/título y perfil */
+    align-items: center; /* Centra verticalmente los elementos */
     background-color: #fef8f9;
     padding: 10px 20px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor del logo y el título */
+.logueado header div:first-child {
+    display: flex; /* Alinea el logo y el título en línea horizontal */
+    align-items: center; /* Centra verticalmente el texto con el logo */
+    gap: 10px; /* Espaciado entre el logo y el texto */
+}
+
+/* Ajuste del logo */
+.logueado header img {
+    height: 80px; /* Incrementa el tamaño del logo */
+    width: auto; /* Mantén la proporción del logo */
+}
+
+/* Estilo del título (h2) */
+.logueado header h2 {
+    font-size: 2rem; /* Tamaño más grande para destacar */
+    margin: 0; /* Elimina márgenes innecesarios */
+    font-weight: bold; /* Hazlo más destacado */
+    color: #333; /* Color oscuro para contraste */
+}
+
+/* Estilo para el contenedor del perfil */
+.logueado .perfil {
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos del perfil */
+    gap: 10px; /* Espaciado entre los elementos */
+}
+
+.foto-perfil {
+    height: 40px; /* Tamaño de la foto de perfil */
+    width: 40px;
+    border-radius: 50%; /* Redondea la imagen */
+    object-fit: cover; /* Ajusta la imagen a su contenedor */
+    border: 2px solid #ccc; /* Bordes suaves */
+}
+
+.menu-header button#Perfil {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #f0f0f0; /* Sin fondo blanco en el botón de perfil */
+    transition: background-color 0.3s;
+}
+
+.menu-header button#Perfil:hover {
+    background-color: #f0f0f0; /* Fondo gris claro en hover */
+}
+
+/************************** MAIN **************************/
+/* Contenedor de los botones principales */
+.botones-principales {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky; /* Fija los botones en su lugar */
+    top: 0px; /* Distancia desde la parte superior de la ventana */
+    z-index: 10; /* Prioridad frente a las tablas */
+    padding: 10px 0;
+    gap: 1rem; /* Espaciado entre botones */
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1); /* Sombra para diferenciarlos */
+}
+
+/* Botones principales */
+.botones-principales button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #f0f0f0; /* Fondo claro */
+    transition: background-color 0.3s;
+}
+
+.botones-principales button:hover {
+    background-color: #ddd; /* Color al pasar el cursor */
+}
+
+/************************** TABLAS **************************/
+/* Estilo general para las tablas */
+.tabla-seccion {
+    margin-top: 80px; /* Espacio debajo de los botones principales */
+    display: none; /* Las tablas están ocultas por defecto */
+}
+
+.tabla-seccion h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.tabla-seccion table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    max-width: 800px; /* Ancho máximo de las tablas */
+}
+
+.tabla-seccion th,
+.tabla-seccion td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.tabla-seccion th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+/************************** MEDIA QUERIES PARA TAMAÑOS DE PANTALLA PEQUEÑOS **************************/
+@media (max-width: 768px) {
+    /* Ajusta el tamaño de los elementos en pantallas más pequeñas */
+    .logueado header {
+        padding: 10px; /* Ajusta el padding */
+    }
+
+    /* Reduce el tamaño del logo */
+    .logueado header img {
+        height: 50px;
+    }
+
+    /* Reduce el tamaño del título */
+    .logueado header h2 {
+        font-size: 1.5rem; /* Ajusta el tamaño del título */
+    }
+
+    /* Botones principales ajustados a pantallas pequeñas */
+    .botones-principales {
+        flex-direction: column; /* Pone los botones en columna en lugar de fila */
+        margin-bottom: 20px;
+    }
+
+    /* Asegúrate de que las tablas se ajusten correctamente */
+    .tabla-seccion {
+        margin-top: 10px;
+    }
+
+    table th, table td {
+        font-size: 0.9rem; /* Reducir el tamaño de las celdas de las tablas */
+    }
+
+    .menu-header button {
+        font-size: 0.9rem; /* Ajustar el tamaño de los botones del header */
+        min-width: 120px; /* Ajusta el tamaño mínimo de los botones */
+    }
+
+    .botones-principales button {
+        font-size: 0.9rem; /* Ajustar el tamaño de los botones principales */
+        min-width: 130px; /* Ajusta el tamaño mínimo de los botones */
+    }
+}
+
+@media (max-width: 480px) {
+    /* Para pantallas aún más pequeñas, ajustamos más */
+    .logueado header h2 {
+        font-size: 1.3rem; /* Título aún más pequeño */
+    }
+
+    /* Logo más pequeño en pantallas muy pequeñas */
+    .logueado header img {
+        height: 40px; /* Ajuste de tamaño */
+    }
+
+    .menu-header button {
+        font-size: 0.8rem; /* Botones más pequeños */
+    }
+
+    .botones-principales button {
+        font-size: 0.8rem; /* Botones más pequeños */
+        min-width: 100px; /* Ajustar tamaño mínimo de los botones */
+    }
 }
 
 /* Contenedor del área central de navegación */
@@ -824,6 +1007,7 @@ h2 {
     margin: 30px auto;
     padding: 20px;
     max-width: 1200px;
+    background-color: #f3e5f5;
 }
 
 /* Estilo para cada sección de aficiones (seleccionadas y no seleccionadas) */
@@ -873,7 +1057,6 @@ h2 {
     display: block;
     margin: 30px auto;
     padding: 15px 30px;
-    background-color: var(--color-principal);
     color: black;
     border: none;
     border-radius: 8px;
@@ -899,7 +1082,7 @@ h2 {
 }
 
     /* *********** Header *********** */
-    .buscarLogueado header {
+.buscarLogueado header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -946,18 +1129,35 @@ h2 {
     color: #007BFF; 
 }
 
-.buscarLogueado #botonIniciarSesion {
-    padding: 8px 15px;
-    background-color: #ff4f81;
-    color: white;
-    border: none;
+.buscarLogueado #botonCerrarSesion {
+    padding: 0.5rem 1rem;  /* Ajustar el relleno si es necesario para reducir el tamaño */
+    font-size: 1rem;
     border-radius: 5px;
-    cursor: pointer;
+    border: 1px solid #ccc;
+    cursor: pointer;    background-color: #ff4f81; 
     transition: background-color 0.3s;
+    margin-right: 1rem; /* Añadir espacio a la derecha del botón */
+    width: auto;  /* Ajustar el tamaño del botón a su contenido */
 }
 
 .buscarLogueado #botonIniciarSesion:hover {
     background-color: #e84393;
+}
+
+.buscarLogueado #atrasBtn {
+    padding: 0.5rem 1rem;  /* Ajustar el relleno si es necesario para reducir el tamaño */
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #f0f0f0; /* Fondo claro */
+    transition: background-color 0.3s;
+    margin-right: 1rem; /* Añadir espacio a la derecha del botón */
+    width: auto;  /* Ajustar el tamaño del botón a su contenido */
+}
+
+.buscarLogueado #atrasBtn:hover {
+    background-color: #e0e0e0; /* Fondo más oscuro al pasar el ratón */
 }
 
 /* *********** Main y Formulario *********** */
@@ -971,10 +1171,13 @@ h2 {
 .buscarLogueado .container {
     width: 100%;
     max-width: 800px;
+    margin: 0 auto;
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid red; /* Para ver el contenedor */
+
 }
 
 .buscarLogueado form {
@@ -1064,3 +1267,42 @@ h2 {
         margin-top: 10px;
     }
 }
+
+/* Estilos para alinear el formulario horizontalmente */
+        #buscarForm {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Ajustes para los elementos individuales */
+        #buscarForm label {
+            margin-right: 10px;
+        }
+
+        #buscarForm select {
+            margin-right: 20px;
+        }
+
+        #checkboxContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        #checkboxContainer label {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        /* Ajustes adicionales para el diseño */
+        fieldset {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+        }

@@ -9,15 +9,22 @@ document.addEventListener('DOMContentLoaded', function () {
     cargarAficiones(); // Cargar las aficiones desde la base de datos
 });
 
-//Boton atrás
-var atrasBtn = document.getElementById("atrasBtn");
-
-
-atrasBtn.addEventListener("click", function () {
-
-    window.location.href = 'logueado.html';
-
-});
+    botonCerrarSesion = document.getElementById("botonCerrarSesion");
+    botonAtras = document.getElementById("atrasBtn");
+    botonInicio = document.getElementById("botonInicio");
+    
+    botonCerrarSesion.addEventListener('click', function() {
+        sessionStorage.clear();
+        window.location.href = 'index.html';    
+    });
+ 
+    botonAtras.addEventListener('click', function() {
+        window.location.href = 'logueado.html';
+    });
+    
+    botonInicio.addEventListener('click', function() {
+        window.location.href = 'logueado.html';
+    });
 
 // Función para generar las opciones en un rango específico
 function generarOpcionesEdad(selectId, minEdad, maxEdad) {
@@ -109,20 +116,7 @@ function generarCheckboxesAficiones(aficiones) {
     });
 }
 
-// Botones
-var botonCerrarSesion = document.getElementById('botonCerrarSesion');
-var buscarBtn = document.getElementById("buscarBtn");
-
 var usuarioLogueado = JSON.parse(sessionStorage.getItem("usuarioLogueado"));
-
-botonCerrarSesion.addEventListener('click', function () {
-    cerrarSesion();
-});
-
-function cerrarSesion(){
-    sessionStorage.clear();
-    window.location.href = 'index.html';
-}
 
 buscarBtn.addEventListener("click", function () {
     buscarUsuariosPorCriterios();

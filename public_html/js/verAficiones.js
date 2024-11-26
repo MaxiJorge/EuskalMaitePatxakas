@@ -12,27 +12,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-var botonCerrarSesion = document.getElementById('botonCerrarSesion');
-
-botonCerrarSesion.addEventListener('click', function () {
-
-    cerrarSesion();
-});
-
-function cerrarSesion(){
+    botonCerrarSesion = document.getElementById("botonCerrarSesion");
+    botonAtras = document.getElementById("atrasBtn");
+    botonInicio = document.getElementById("botonInicio");
+    
+    botonCerrarSesion.addEventListener('click', function() {
         sessionStorage.clear();
-        window.location.href = 'index.html';
-    }
-
-
-function atrasPagina() {
-    event.preventDefault();
-    window.history.back();
-}
-
-document.getElementById("botonAtras").addEventListener('click', function () {
-    atrasPagina();
-});
+        window.location.href = 'index.html';    
+    });
+ 
+    botonAtras.addEventListener('click', function() {
+        window.location.href = 'logueado.html';
+    });
+    
+    botonInicio.addEventListener('click', function() {
+        window.location.href = 'logueado.html';
+    });
 
 // Función para obtener las aficiones del usuario logueado
 function obtenerAficiones(correoUsuario) {

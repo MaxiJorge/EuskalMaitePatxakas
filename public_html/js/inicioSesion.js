@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+    botonAtras = document.getElementById("atrasBtn");
+ 
+    botonAtras.addEventListener('click', function() {
+        window.location.href = 'index.html';
+    });
+
 function iniciarSesion() {
     
     const email = document.getElementById('email2').value;

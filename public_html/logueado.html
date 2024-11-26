@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/estilos.css"> <!-- Enlazando el archivo de estilos -->
     <link rel="icon" type="image/ico" href="img/favicon.ico"/>
-   
+    <title>VitoMaite - Perfil</title>
 </head>
+
 <body class="logueado">
+
     <header>
-        <div>
-        <img src="img/VitoMaiteLogo2.png" alt="logo de la app">
-        <h2>𝒱𝒾𝓉𝑜𝑀𝒶𝒾𝓉𝑒</h2>
+        <div class="logo">
+            <img src="img/VitoMaiteLogo2.png" alt="logo de la app">
+            <h2>𝒱𝒾𝓉𝑜𝑀𝒶𝒾𝓉𝑒</h2>
         </div>
         <div class="perfil">
-            
-
-            <!-- Botones en el header -->
+            <!-- Menú en el Header -->
             <nav class="menu-header">
-                <!-- Botón de Perfil -->
-                <button id="Perfil">PERFIL</button>
+                <button id="Perfil" class="menu-item">PERFIL</button>
 
                 <!-- Menú de Aficiones -->
                 <div class="menu-desplegable">
@@ -39,37 +39,21 @@
                     </div>
                 </div>
             </nav>
+
             <!-- Saludo personalizado -->
-            <div id="saludo"></div>
+            <div id="saludo" class="saludo"></div>
             <img id="fotoPerfil" src="" alt="Foto de perfil" class="foto-perfil">
-            <button id="botonCerrarSesion">Cerrar Sesión</button>
+            <button id="botonCerrarSesion" class="cerrar-sesion">Cerrar Sesión</button>
         </div>
     </header>
-    
+
     <main>
         <!-- Botones principales -->
         <div class="botones-principales">
-            <button id="misLikes">MIS LIKES</button>
-            <button id="buscar">BUSCAR</button>
-            <button id="verMatchesBtn">VER MATCHES</button> <!-- Botón añadido -->
+            <button id="misLikes" class="boton-principal">MIS LIKES</button>
+            <button id="buscar" class="boton-principal">BUSCAR</button>
+            <button id="verMatchesBtn" class="boton-principal">VER MATCHES</button> <!-- Botón añadido -->
         </div>
-
-        <!-- Tabla de Visitas -->
-        <section class="tabla-seccion" id="tablaVisitasSeccion">
-            <h3>Mis Visitas</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Usuario</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-visitas">
-                    <!-- Las visitas se llenarán desde JavaScript -->
-                </tbody>
-            </table>
-        </section>
 
         <!-- Tabla de Likes -->
         <section class="tabla-seccion" id="tablaLikesSeccion">
@@ -110,4 +94,5 @@
 
     <script src="js/logueado.js" defer></script>
 </body>
+
 </html>

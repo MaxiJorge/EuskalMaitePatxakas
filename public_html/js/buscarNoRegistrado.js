@@ -18,6 +18,12 @@ buscarBtn.addEventListener("click", function () {
   buscarUsuariosPorCriterios();
    
 });
+
+botonAtras = document.getElementById("atrasBtn");
+ 
+    botonAtras.addEventListener('click', function() {
+        window.location.href = 'index.html';
+    });
  
 
 // Función para generar las opciones en un rango específico
@@ -30,7 +36,7 @@ function generarOpcionesEdad(selectId, minEdad, maxEdad) {
     //Nada mas entras que no te salga seleccionado el 18
     var optionMin = document.createElement("option");
     optionMin.value = "";  
-    optionMin.textContent = "Edad mínima";
+    optionMin.textContent = "Selecciona una edad";
     optionMin.disabled = true;  
     optionMin.selected = true; 
     select.appendChild(optionMin);

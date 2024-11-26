@@ -1,5 +1,23 @@
 document.addEventListener('DOMContentLoaded', function () {
     const usuarioLogueado = JSON.parse(sessionStorage.getItem('usuarioLogueado'));
+      
+    botonCerrarSesion = document.getElementById("botonCerrarSesion");
+    botonAtras = document.getElementById("atrasBtn");
+    botonInicio = document.getElementById("botonInicio");
+    
+    botonCerrarSesion.addEventListener('click', function() {
+        sessionStorage.clear();
+        window.location.href = 'index.html';    
+    });
+ 
+    botonAtras.addEventListener('click', function() {
+        window.location.href = 'logueado.html';
+    });
+    
+    botonInicio.addEventListener('click', function() {
+        window.location.href = 'logueado.html';
+    });
+    
     const dbRequest = indexedDB.open("vitomaite02", 1);
 
     dbRequest.onerror = function (event) {

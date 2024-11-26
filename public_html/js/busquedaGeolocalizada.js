@@ -1,18 +1,22 @@
 // Coordenadas de referencia (en este caso, las del usuario logueado)
 let latRef, lonRef;
 
-//Boton cerrar sesión
-var botonCerrarSesion = document.getElementById('botonCerrarSesion');
-
-botonCerrarSesion.addEventListener('click', function () {
-
-    cerrarSesion();
-});
-
-function cerrarSesion(){
+    botonCerrarSesion = document.getElementById("botonCerrarSesion");
+    botonAtras = document.getElementById("atrasBtn");
+    botonInicio = document.getElementById("botonInicio");
+    
+    botonCerrarSesion.addEventListener('click', function() {
         sessionStorage.clear();
-        window.location.href = 'index.html';
-    }
+        window.location.href = 'index.html';    
+    });
+ 
+    botonAtras.addEventListener('click', function() {
+        window.location.href = 'logueado.html';
+    });
+    
+    botonInicio.addEventListener('click', function() {
+        window.location.href = 'logueado.html';
+    });
     
 // Función para calcular la distancia entre dos puntos geográficos usando Haversine
 function calcularDistancia(lat1, lon1, lat2, lon2) {

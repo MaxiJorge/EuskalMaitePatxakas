@@ -1,4 +1,22 @@
 // Función para obtener el id del usuario desde la URL
+
+    botonCerrarSesion = document.getElementById("botonCerrarSesion");
+    botonAtras = document.getElementById("atrasBtn");
+    botonInicio = document.getElementById("botonInicio");
+    
+    botonCerrarSesion.addEventListener('click', function() {
+        sessionStorage.clear();
+        window.location.href = 'index.html';    
+    });
+ 
+    botonAtras.addEventListener('click', function() {
+        window.location.href = 'buscarLogueado.html';
+    });
+    
+    botonInicio.addEventListener('click', function() {
+        window.location.href = 'logueado.html';
+    });
+    
 function obtenerIdDesdeURL() {
     const params = new URLSearchParams(window.location.search);
     return params.get('id');
@@ -197,12 +215,6 @@ function mostrarAficiones(aficionesNombres) {
     // Asegurarse de que las aficiones se agregan al contenedor principal donde ya están los detalles del usuario
     detallesDiv.appendChild(aficionesContainer);
 }
-
-// Función para volver a la página anterior
-document.getElementById('btnAtras').addEventListener('click', function (event) {
-    event.preventDefault();
-    window.history.back();
-});
 
 // Obtener el id del usuario desde la URL
 const usuarioId = obtenerIdDesdeURL();

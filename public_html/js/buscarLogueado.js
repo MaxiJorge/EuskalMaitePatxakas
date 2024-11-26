@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
 var botonCerrarSesion = document.getElementById('botonCerrarSesion');
 var buscarBtn = document.getElementById("buscarBtn");
 var atrasBtn = document.getElementById("atrasBtn");
+var botonInicio = document.getElementById("botonInicio");
+
 //Usuario en SessionStorage
 var usuarioLogueado = JSON.parse(sessionStorage.getItem("usuarioLogueado"));
 botonCerrarSesion.addEventListener('click', function () {
@@ -28,6 +30,10 @@ atrasBtn.addEventListener("click", function () {
 
     window.location.href = 'logueado.html';
 
+});
+
+botonInicio.addEventListener('click', function() {
+    window.location.href = 'logueado.html';
 });
 
 
@@ -54,11 +60,10 @@ function darLike(emailEmisor, emailReceptor, nombreReceptor) {
                     if (registro.estado === "1") {
                         // Cambiar el estado a "2" para indicar un MATCH
                         registro.estado = "2";
-                        registro.fechaMatch = new Date().toISOString(); // Guardar la fecha del MATCH
                         var updateRequest = cursor.update(registro);
 
                         updateRequest.onsuccess = function () {
-                            alert(`¡MATCH! tú y ${nombreReceptor} habéis conectado!`);
+                            alert(`¡MATCH! tu y ${nombreReceptor} habeis conectado!`);
                         };
 
                         updateRequest.onerror = function (error) {
@@ -66,7 +71,7 @@ function darLike(emailEmisor, emailReceptor, nombreReceptor) {
                         };
                     } else if (registro.estado === "2") {
                         // Ya existe un MATCH
-                        alert(`¡Ya tienes un MATCH con ${nombreReceptor}, ponte en contacto con él/ella!`);
+                        alert(`¡Ya tienes un MATCH con ${nombreReceptor} ponte en contacto con el!`);
                     }
                     return; // Salir, ya no es necesario continuar
                 }
@@ -100,8 +105,7 @@ function darLike(emailEmisor, emailReceptor, nombreReceptor) {
             var nuevoLike = {
                 user1: correoEmisor,
                 user2: correoReceptor,
-                estado: "1", // Estado inicial
-                fecha: new Date().toISOString() // Guardar la fecha actual del like
+                estado: "1" // Estado inicial
             };
 
             var addRequest = meGustaStore.add(nuevoLike);
@@ -127,7 +131,7 @@ function generarOpcionesEdad(selectId, minEdad, maxEdad) {
     //Nada mas entras que no te salga seleccionado el 18
     var optionMin = document.createElement("option");
     optionMin.value = "";
-    optionMin.textContent = "Edad mínima";
+    optionMin.textContent = "Selecciona una edad";
     optionMin.disabled = true;
     optionMin.selected = true;
     select.appendChild(optionMin);
