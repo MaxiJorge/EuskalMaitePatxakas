@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/estilos.css"> <!-- Estilos -->
+    <link rel="stylesheet" href="css/busquedaGeolocalizada.css"> <!-- Estilos -->
     <link rel="icon" type="image/ico" href="img/favicon.ico"/>
     <title>Mapa con Google Maps</title>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbLNU4A5lwf_3_7y28eWHMARRlEn6fvCU"></script>
@@ -15,7 +15,7 @@
             <img src="img/VitoMaiteLogo2.png" alt="logo de la app">
             <h2>𝒱𝒾𝓉𝑜𝑀𝒶𝒾𝓉𝑒</h2>
         </div>
-        <h1 class="titulo-cita">Detalles del Usuario</h1>
+        <h1 class="titulo-cita">Búsqueda Geolocalizada</h1>
         <nav>
             <button id="botonInicio">Inicio</button>
             <button id="atrasBtn">Atrás</button>
@@ -23,17 +23,18 @@
         </nav>
     </header>
 
-    <!-- Control de rango para seleccionar el radio -->
-    <div class="radio-control">
-        <label for="radio-range">Selecciona el radio de búsqueda:</label>
-        <input type="range" id="radio-range" min="0.5" max="2" step="0.5" value="1" />
-        
-    </div>
+    <main>
+        <!-- Control de rango para seleccionar el radio -->
+        <div class="radio-control">
+            <label for="radio-range">Selecciona el radio de búsqueda:</label>
+            <input type="range" id="radio-range" min="0.5" max="2" step="0.5" value="1" />
+        </div>
 
-    <!-- Contenedor del mapa -->
-    <div class="map-container">
-        <div id="map"></div>
-    </div>
+        <!-- Contenedor del mapa -->
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+    </main>
     
     <footer>
         <div>© 2024 VitoMaite. Todos los derechos reservados.</div>
@@ -43,5 +44,3 @@
 
 </body>
 </html>
-
-
